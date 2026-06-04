@@ -104,6 +104,7 @@ function PostEditor({ postId, post, categories, onClose }) {
       meta_title: post?.meta_title || '',
       meta_desc: post?.meta_desc || '',
       imatge_url: post?.imatge_url || '',
+      imatge_peu: post?.imatge_peu || '',
     }
   })
 
