@@ -170,7 +170,7 @@ function CandidatsEditor({ candidats, onChange }) {
       <div className="space-y-2">
         {candidats.map((c, i) => (
           <div key={i} className="flex gap-2 items-center bg-paper rounded-lg p-2 border border-border">
-            <div className="font-mono text-[10px] text-mid w-5 text-center font-bold">{i+1}</div>
+            <div className="w-5 h-5 rounded-full flex items-center justify-center text-white font-mono text-[9px] font-bold flex-shrink-0" style={{background:"#888"}}>{i+2}</div>
             <input
               value={c.nom} onChange={e => update(i,'nom',e.target.value)}
               placeholder="Nom i cognoms"
