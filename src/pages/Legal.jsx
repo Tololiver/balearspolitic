@@ -7,7 +7,7 @@ export default function Legal() {
 
       <div className="prose-custom space-y-8">
         <Section title="1. Titular del web">
-          <p>BalearsPolitic és un projecte de <strong>Tolo Oliver</strong>, amb domicili a les Illes Balears, Espanya. Contacte: <a href="mailto:hola@balearspolitic.cat" className="text-accent hover:underline">hola@balearspolitic.cat</a></p>
+          <p>BalearsPolitic és un projecte de <strong>Tolo Oliver</strong>, amb domicili a les Illes Balears, Espanya. Contacte: <a href="mailto:boocman@gmail.com" className="text-accent hover:underline">hola@balearspolitic.cat</a></p>
         </Section>
 
         <Section title="2. Objecte i finalitat">
