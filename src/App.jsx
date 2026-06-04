@@ -6,6 +6,9 @@ import Footer from '@/components/layout/Footer'
 import { LoadingSpinner } from '@/components/ui'
 
 const Home        = lazy(() => import('@/pages/Home'))
+const Legal       = lazy(() => import('@/pages/Legal'))
+const Privacitat  = lazy(() => import('@/pages/Privacitat'))
+const Cookies     = lazy(() => import('@/pages/Cookies'))
 const Comparativa = lazy(() => import('@/components/sections/Comparativa'))
 const Partits     = lazy(() => import('@/components/sections/Partits'))
 const Comparador  = lazy(() => import('@/components/sections/Comparador'))
@@ -43,12 +46,15 @@ function PublicLayout() {
             <Route path="comparador"      element={<Comparador />} />
             <Route path="programes"       element={<Programes />} />
             <Route path="ajuntaments"     element={<Pobles />} />
-            <Route path="pobles"          element={<Pobles />} />  {/* redirect antic */}
+            <Route path="pobles"          element={<Pobles />} />
             <Route path="eleccions-2027"  element={<Elect27 />} />
             <Route path="governs"         element={<Governs />} />
             <Route path="fonts"           element={<Fonts />} />
             <Route path="blog"            element={<Blog />} />
             <Route path="blog/:slug"      element={<BlogPost />} />
+            <Route path="avis-legal"      element={<Legal />} />
+            <Route path="privacitat"      element={<Privacitat />} />
+            <Route path="cookies"         element={<Cookies />} />
             <Route path="*"               element={<Home />} />
           </Routes>
         </Suspense>
