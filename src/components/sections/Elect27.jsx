@@ -3,11 +3,54 @@ import { useState } from 'react'
 import { SectionTitleBar, ContentWrap, LoadingSpinner } from '@/components/ui'
 import { useCandidatures, useSondejos } from '@/hooks/useCandidatures'
 
-const PARLAMENTS = [
+// ── Dades parlament Govern IB ──────────────────────────────────
+const PARLAMENTS_GOVERN = [
   { any:2023, total:59, partits:[{nom:'PP',n:25,c:'#0e2a6e'},{nom:'PSIB',n:18,c:'#b82012'},{nom:'Vox',n:8,c:'#4a6600'},{nom:'Més',n:4,c:'#1a5c30'},{nom:'MxMe',n:2,c:'#005448'},{nom:'Podem',n:1,c:'#6b0f9e'},{nom:'Sa Unió',n:1,c:'#4527a0'}]},
   { any:2019, total:59, partits:[{nom:'PSIB',n:19,c:'#b82012'},{nom:'PP',n:17,c:'#0e2a6e'},{nom:'Podem',n:7,c:'#6b0f9e'},{nom:'Més',n:5,c:'#1a5c30'},{nom:'Vox',n:3,c:'#4a6600'},{nom:'El Pi',n:3,c:'#bf5c00'},{nom:'MxMe',n:2,c:'#005448'},{nom:'Cs',n:3,c:'#e8a000'}]},
   { any:2015, total:59, partits:[{nom:'PP',n:20,c:'#0e2a6e'},{nom:'PSIB',n:14,c:'#b82012'},{nom:'Podem',n:10,c:'#6b0f9e'},{nom:'Més',n:6,c:'#1a5c30'},{nom:'El Pi',n:3,c:'#bf5c00'},{nom:'MxMe',n:3,c:'#005448'},{nom:'Cs',n:2,c:'#e8a000'},{nom:'Altres',n:1,c:'#aaa'}]},
 ]
+
+// ── Dades Consells Insulars (estoy suponiendo alguns escons 2015/2019) ──
+const CONSELLS = {
+  Mallorca: {
+    total: 51,
+    note: 'Consell Insular de Mallorca · 51 consellers',
+    anys: [
+      { any:2023, partits:[{nom:'PP',n:21,c:'#0e2a6e'},{nom:'PSIB',n:13,c:'#b82012'},{nom:'Vox',n:7,c:'#4a6600'},{nom:'Més',n:5,c:'#1a5c30'},{nom:'El Pi',n:3,c:'#bf5c00'},{nom:'MxMe',n:2,c:'#005448'}] },
+      { any:2019, partits:[{nom:'PSIB',n:16,c:'#b82012'},{nom:'PP',n:14,c:'#0e2a6e'},{nom:'Podem',n:6,c:'#6b0f9e'},{nom:'Més',n:6,c:'#1a5c30'},{nom:'El Pi',n:5,c:'#bf5c00'},{nom:'Vox',n:2,c:'#4a6600'},{nom:'MxMe',n:2,c:'#005448'}] },
+      { any:2015, partits:[{nom:'PP',n:16,c:'#0e2a6e'},{nom:'PSIB',n:12,c:'#b82012'},{nom:'Podem',n:8,c:'#6b0f9e'},{nom:'Més',n:7,c:'#1a5c30'},{nom:'El Pi',n:5,c:'#bf5c00'},{nom:'MxMe',n:3,c:'#005448'}] },
+    ]
+  },
+  Menorca: {
+    total: 21,
+    note: 'Consell Insular de Menorca · 21 consellers',
+    anys: [
+      { any:2023, partits:[{nom:'PP',n:8,c:'#0e2a6e'},{nom:'PSIB',n:7,c:'#b82012'},{nom:'MxMe',n:4,c:'#005448'},{nom:'Vox',n:2,c:'#4a6600'}] },
+      { any:2019, partits:[{nom:'PSIB',n:8,c:'#b82012'},{nom:'PP',n:6,c:'#0e2a6e'},{nom:'MxMe',n:5,c:'#005448'},{nom:'Podem',n:2,c:'#6b0f9e'}] },
+      { any:2015, partits:[{nom:'PP',n:8,c:'#0e2a6e'},{nom:'PSIB',n:7,c:'#b82012'},{nom:'MxMe',n:4,c:'#005448'},{nom:'Podem',n:2,c:'#6b0f9e'}] },
+    ]
+  },
+  Eivissa: {
+    total: 30,
+    note: 'Consell Insular d\'Eivissa · 30 consellers',
+    anys: [
+      { any:2023, partits:[{nom:'PP',n:13,c:'#0e2a6e'},{nom:'PSIB',n:9,c:'#b82012'},{nom:'Vox',n:5,c:'#4a6600'},{nom:'Podem',n:3,c:'#6b0f9e'}] },
+      { any:2019, partits:[{nom:'PSIB',n:11,c:'#b82012'},{nom:'PP',n:10,c:'#0e2a6e'},{nom:'Podem',n:5,c:'#6b0f9e'},{nom:'Vox',n:2,c:'#4a6600'},{nom:'Cs',n:2,c:'#e8a000'}] },
+      { any:2015, partits:[{nom:'PP',n:12,c:'#0e2a6e'},{nom:'PSIB',n:9,c:'#b82012'},{nom:'Podem',n:6,c:'#6b0f9e'},{nom:'Cs',n:2,c:'#e8a000'},{nom:'Altres',n:1,c:'#aaa'}] },
+    ]
+  },
+  Formentera: {
+    total: 13,
+    note: 'Consell Insular de Formentera · 13 consellers',
+    anys: [
+      { any:2023, partits:[{nom:'Sa Unió',n:6,c:'#4527a0'},{nom:'PP',n:4,c:'#0e2a6e'},{nom:'PSIB',n:3,c:'#b82012'}] },
+      { any:2019, partits:[{nom:'PSIB-GxF',n:6,c:'#b82012'},{nom:'PP',n:4,c:'#0e2a6e'},{nom:'Podem',n:2,c:'#6b0f9e'},{nom:'Sa Unió',n:1,c:'#4527a0'}] },
+      { any:2015, partits:[{nom:'PSIB-GxF',n:7,c:'#b82012'},{nom:'PP',n:4,c:'#0e2a6e'},{nom:'Podem',n:2,c:'#6b0f9e'}] },
+    ]
+  },
+}
+
+const ILLES_CONSELLS = ['totes','Mallorca','Menorca','Eivissa','Formentera']
 
 const ISSUES = [
   {icon:'home',title:'Habitatge',color:'#b82012',text:'El tema número 1. Baleares és la CCAA amb els preus de lloguer més alts.'},
@@ -33,7 +76,59 @@ const PARTITS_CALC = [
   {nom:'Sa Unió',color:'#4527a0'},{nom:'El Pi',color:'#bf5c00'},{nom:'Altres',color:'#999'},
 ]
 
-const ILLES_CONSELLS = ['totes','Mallorca','Menorca','Eivissa','Formentera']
+// ── Barra de parlament ─────────────────────────────────────────
+function ParlamentBar({ data, total, note, approx }) {
+  const majoria = Math.ceil(total / 2)
+  return (
+    <div>
+      <div className="flex h-6 rounded-lg overflow-hidden mb-2">
+        {data.partits.map(p => (
+          <div key={p.nom} style={{flex:p.n, background:p.c}} title={`${p.nom}: ${p.n}`}
+            className="flex items-center justify-center">
+            {p.n >= 3 && <span className="text-white font-mono text-[9px] font-bold">{p.n}</span>}
+          </div>
+        ))}
+      </div>
+      <div className="flex items-center gap-2 mb-2">
+        <div className="w-0.5 h-3 bg-red-400"/>
+        <span className="font-mono text-[9px] text-mid">Majoria: {majoria}</span>
+        {approx && <span className="font-mono text-[9px] text-amber-600 ml-auto">⚠ Dades aproximades</span>}
+      </div>
+      <div className="flex flex-wrap gap-x-3 gap-y-0.5">
+        {data.partits.map(p => (
+          <span key={p.nom} className="flex items-center gap-1 font-mono text-[9px] text-mid">
+            <span className="w-2 h-2 rounded-sm" style={{background:p.c}}/>{p.nom}: {p.n}
+          </span>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+// ── Resultats per Consell ──────────────────────────────────────
+function ConsellResultats({ illa }) {
+  const [any, setAny] = useState(2023)
+  const consell = CONSELLS[illa]
+  if (!consell) return null
+  const data = consell.anys.find(a => a.any === any)
+
+  return (
+    <div className="bg-white rounded-card border border-border overflow-hidden mt-4">
+      <div className="flex border-b border-border">
+        {[2023, 2019, 2015].map(a => (
+          <button key={a} onClick={() => setAny(a)}
+            className={`flex-1 py-2.5 text-xs font-bold font-mono transition-colors ${any === a ? 'bg-ink text-white' : 'text-mid hover:bg-paper'}`}>
+            {a}
+          </button>
+        ))}
+      </div>
+      <div className="p-4">
+        <div className="font-mono text-[9px] tracking-[2px] uppercase text-mid mb-3">{consell.note}</div>
+        {data && <ParlamentBar data={data} total={consell.total} approx={any < 2023} />}
+      </div>
+    </div>
+  )
+}
 
 // ── Simulador ─────────────────────────────────────────────────
 function Calculator() {
@@ -95,8 +190,8 @@ function Calculator() {
             {label:'PP+Vox+Sa Unió',n:govPP,color:'#0e2a6e'},
             {label:'PSIB+Més+Podem+MxMe',n:govESQ,color:'#b82012'},
           ].map(({label,n,color})=>(
-            <div key={label} className={`rounded-lg p-3 border-2 ${n>=majoria?'':'border-border bg-paper'}`}
-              style={{borderColor:n>=majoria?color:undefined,background:n>=majoria?`${color}10`:undefined}}>
+            <div key={label} className="rounded-lg p-3 border-2"
+              style={{borderColor:n>=majoria?color:'#e5e0d8',background:n>=majoria?`${color}10`:'#fafaf8'}}>
               <div className="font-mono text-[9px] uppercase tracking-[1.5px] text-mid mb-1">{label}</div>
               <div className="font-display text-2xl font-black" style={{color}}>{n}</div>
               <div className="text-[10px] text-mid mt-1">{n>=majoria?'✅ Majoria':`Falta ${majoria-n}`}</div>
@@ -112,9 +207,7 @@ function Calculator() {
 function SondejosWidget() {
   const { data: sondejos, isLoading } = useSondejos({ ambit:'govern' })
   if (isLoading||!sondejos?.length) return (
-    <div className="text-xs text-mid text-center py-4 border border-border rounded-card">
-      Sense sondejos publicats encara.
-    </div>
+    <div className="text-xs text-mid text-center py-4 border border-border rounded-card">Sense sondejos publicats encara.</div>
   )
   return (
     <div className="bg-white rounded-card border border-border overflow-hidden">
@@ -192,113 +285,65 @@ function CandidaturesSection({ ambit, illaFilter }) {
             {cands.map(c => {
               const isOpen = open === c.id
               const color = c.partits?.color || '#888'
-              // Número 1 = cap_llista, des del 2 = candidats[]
               const llistaCompleta = [
-                ...(c.cap_llista ? [{nom: c.cap_llista, carrec: 'Cap de llista', esCap: true}] : []),
-                ...(c.candidats || []).map((cd, i) => ({...cd, carrec: cd.carrec || `Número ${i + 2}`, esCap: false}))
+                ...(c.cap_llista ? [{nom:c.cap_llista, carrec:'Cap de llista', esCap:true}] : []),
+                ...(c.candidats||[]).map((cd,i)=>({...cd, carrec:cd.carrec||`Número ${i+2}`, esCap:false}))
               ]
-
               return (
                 <div key={c.id}>
                   <button onClick={() => setOpen(isOpen ? null : c.id)}
                     className="w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-paper transition-colors">
                     {c.cap_foto ? (
-                      <img src={c.cap_foto} alt={c.cap_llista}
-                        className="w-10 h-10 rounded-full object-cover flex-shrink-0 border-2"
-                        style={{borderColor: color}}/>
+                      <img src={c.cap_foto} alt={c.cap_llista} className="w-10 h-10 rounded-full object-cover flex-shrink-0 border-2" style={{borderColor:color}}/>
                     ) : (
-                      <div className="w-10 h-10 rounded-full flex-shrink-0 flex items-center justify-center"
-                        style={{background: `${color}20`}}>
-                        <svg className="w-5 h-5 opacity-30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
-                        </svg>
+                      <div className="w-10 h-10 rounded-full flex-shrink-0 flex items-center justify-center" style={{background:`${color}20`}}>
+                        <svg className="w-5 h-5 opacity-30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
                       </div>
                     )}
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 flex-wrap">
-                        <span className="font-mono text-[9px] font-bold text-white px-1.5 py-0.5 rounded"
-                          style={{background: color}}>
-                          {c.partits?.nom || c.parti_codi}
+                        <span className="font-mono text-[9px] font-bold text-white px-1.5 py-0.5 rounded" style={{background:color}}>
+                          {c.partits?.nom||c.parti_codi}
                         </span>
                         {c.cap_llista && <span className="font-semibold text-sm text-ink">{c.cap_llista}</span>}
                       </div>
                       {c.bio && <div className="text-xs text-mid mt-0.5 truncate">{c.bio}</div>}
-                      {llistaCompleta.length > 1 && (
-                        <div className="text-[9px] font-mono text-mid/60 mt-0.5">
-                          {llistaCompleta.length} candidats a la llista
-                        </div>
-                      )}
+                      {llistaCompleta.length > 1 && <div className="text-[9px] font-mono text-mid/60 mt-0.5">{llistaCompleta.length} candidats a la llista</div>}
                     </div>
                     <div className="flex items-center gap-2 flex-shrink-0">
                       {c.programa_pdf_url && (
-                        <a href={c.programa_pdf_url} target="_blank" rel="noreferrer"
-                          onClick={e => e.stopPropagation()}
+                        <a href={c.programa_pdf_url} target="_blank" rel="noreferrer" onClick={e=>e.stopPropagation()}
                           className="flex items-center gap-1 text-[10px] font-mono text-accent hover:underline border border-accent/30 rounded px-2 py-0.5">
-                          <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                            <polyline points="14 2 14 8 20 8"/>
-                          </svg>PDF
+                          <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>PDF
                         </a>
                       )}
-                      <svg className={`w-4 h-4 text-mid transition-transform ${isOpen ? 'rotate-180' : ''}`}
-                        viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                        <polyline points="6 9 12 15 18 9"/>
-                      </svg>
+                      <svg className={`w-4 h-4 text-mid transition-transform ${isOpen?'rotate-180':''}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><polyline points="6 9 12 15 18 9"/></svg>
                     </div>
                   </button>
-
                   {isOpen && (
-                    <div className="border-t border-border" style={{background: c.partits?.bg_color || '#fafafa'}}>
+                    <div className="border-t border-border" style={{background:c.partits?.bg_color||'#fafafa'}}>
                       {llistaCompleta.length > 0 && (
                         <div className="px-4 pt-4 pb-2">
-                          <div className="font-mono text-[9px] tracking-[2px] uppercase font-bold mb-2" style={{color}}>
-                            Candidats/es a la llista
-                          </div>
+                          <div className="font-mono text-[9px] tracking-[2px] uppercase font-bold mb-2" style={{color}}>Candidats/es a la llista</div>
                           <div className="space-y-0">
-                            {llistaCompleta.map((cd, i) => (
+                            {llistaCompleta.map((cd,i)=>(
                               <div key={i} className="flex items-center gap-2.5 py-1.5 border-b border-black/5 last:border-0">
                                 <div className="w-5 h-5 rounded-full flex items-center justify-center text-white font-mono text-[9px] font-bold flex-shrink-0"
-                                  style={{background: cd.esCap ? color : `${color}55`}}>
-                                  {i + 1}
-                                </div>
-                                <span className={`text-xs ${cd.esCap ? 'font-bold text-ink' : 'text-mid'}`}>{cd.nom}</span>
+                                  style={{background:cd.esCap?color:`${color}55`}}>{i+1}</div>
+                                <span className={`text-xs ${cd.esCap?'font-bold text-ink':'text-mid'}`}>{cd.nom}</span>
                                 <span className="font-mono text-[9px] text-mid/60 ml-auto">{cd.carrec}</span>
                               </div>
                             ))}
                           </div>
                         </div>
                       )}
-                      {(c.resum_ia || c.propostes?.length > 0) && (
+                      {(c.resum_ia||c.propostes?.length>0) && (
                         <div className="px-4 py-3 border-t border-black/5">
-                          {c.resum_ia && (
-                            <div className="mb-3">
-                              <div className="font-mono text-[9px] tracking-[2px] uppercase font-bold mb-1.5" style={{color}}>
-                                ✨ Resum del programa
-                              </div>
-                              <p className="text-sm text-mid leading-relaxed">{c.resum_ia}</p>
-                            </div>
-                          )}
-                          {c.propostes?.length > 0 && (
-                            <div>
-                              <div className="font-mono text-[9px] tracking-[2px] uppercase font-bold mb-1.5" style={{color}}>
-                                Propostes clau
-                              </div>
-                              <ul className="space-y-1">
-                                {c.propostes.map((pr, i) => (
-                                  <li key={i} className="flex gap-2 text-xs text-mid py-1 border-b border-black/5 last:border-0">
-                                    <span style={{color}} className="font-bold flex-shrink-0">→</span><span>{pr}</span>
-                                  </li>
-                                ))}
-                              </ul>
-                            </div>
-                          )}
+                          {c.resum_ia && <div className="mb-3"><div className="font-mono text-[9px] tracking-[2px] uppercase font-bold mb-1.5" style={{color}}>✨ Resum del programa</div><p className="text-sm text-mid leading-relaxed">{c.resum_ia}</p></div>}
+                          {c.propostes?.length>0 && <div><div className="font-mono text-[9px] tracking-[2px] uppercase font-bold mb-1.5" style={{color}}>Propostes clau</div><ul className="space-y-1">{c.propostes.map((pr,i)=><li key={i} className="flex gap-2 text-xs text-mid py-1 border-b border-black/5 last:border-0"><span style={{color}} className="font-bold flex-shrink-0">→</span><span>{pr}</span></li>)}</ul></div>}
                         </div>
                       )}
-                      {!c.resum_ia && !c.propostes?.length && llistaCompleta.length === 0 && (
-                        <div className="px-4 py-3">
-                          <p className="text-xs text-mid italic">Programa pendent de publicació.</p>
-                        </div>
-                      )}
+                      {!c.resum_ia&&!c.propostes?.length&&llistaCompleta.length===0&&<div className="px-4 py-3"><p className="text-xs text-mid italic">Programa pendent de publicació.</p></div>}
                     </div>
                   )}
                 </div>
@@ -323,8 +368,8 @@ const TABS = [
 export default function Elect27() {
   const [tab, setTab] = useState('govern')
   const [parlAny, setParlAny] = useState(2023)
-  const [illaConsell, setIllaConsell] = useState('totes')
-  const parl = PARLAMENTS.find(p => p.any === parlAny)
+  const [illaConsell, setIllaConsell] = useState('Mallorca')
+  const parl = PARLAMENTS_GOVERN.find(p => p.any === parlAny)
 
   return (
     <>
@@ -337,14 +382,13 @@ export default function Elect27() {
       <ContentWrap>
         <div className="bg-amber-50 border border-amber-200 rounded-card p-3 mb-6 flex gap-2 text-xs text-amber-800">
           <svg className="w-3.5 h-3.5 text-amber-600 flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-          <span><strong>Nota:</strong> Candidatures i sondejos s'actualitzen a mesura que es fan públics. Programes anticipats basats en declaracions fins a juny 2026.</span>
+          <span><strong>Nota:</strong> Candidatures i sondejos s'actualitzen a mesura que es fan públics. Dades de consells 2015/2019 aproximades — verifícalas.</span>
         </div>
 
-        {/* Tabs */}
         <div className="flex gap-1 flex-wrap mb-6 bg-paper rounded-lg p-1 border border-border">
           {TABS.map(t => (
             <button key={t.id} onClick={() => setTab(t.id)}
-              className={`flex-1 py-2 px-3 rounded text-xs font-semibold transition-all whitespace-nowrap ${tab === t.id ? 'bg-ink text-white' : 'text-mid hover:text-ink'}`}>
+              className={`flex-1 py-2 px-3 rounded text-xs font-semibold transition-all whitespace-nowrap ${tab===t.id?'bg-ink text-white':'text-mid hover:text-ink'}`}>
               {t.label}
             </button>
           ))}
@@ -357,37 +401,15 @@ export default function Elect27() {
               <div className="font-mono text-[10px] tracking-[2px] uppercase text-mid mb-3">Composicions parlamentàries</div>
               <div className="bg-white rounded-card border border-border overflow-hidden">
                 <div className="flex border-b border-border">
-                  {PARLAMENTS.map(p => (
-                    <button key={p.any} onClick={() => setParlAny(p.any)}
-                      className={`flex-1 py-3 text-sm font-bold font-mono transition-colors ${parlAny === p.any ? 'bg-ink text-white' : 'text-mid hover:bg-paper'}`}>
+                  {PARLAMENTS_GOVERN.map(p=>(
+                    <button key={p.any} onClick={()=>setParlAny(p.any)}
+                      className={`flex-1 py-3 text-sm font-bold font-mono transition-colors ${parlAny===p.any?'bg-ink text-white':'text-mid hover:bg-paper'}`}>
                       {p.any}
                     </button>
                   ))}
                 </div>
                 <div className="p-5">
-                  <div className="flex h-8 rounded-lg overflow-hidden mb-3">
-                    {parl?.partits.map(p => (
-                      <div key={p.nom} style={{flex:p.n,background:p.c}} title={`${p.nom}: ${p.n}`}
-                        className="flex items-center justify-center">
-                        {p.n>=3&&<span className="text-white font-mono text-[10px] font-bold">{p.n}</span>}
-                      </div>
-                    ))}
-                  </div>
-                  <div className="flex items-center gap-2 mb-3">
-                    <div className="w-0.5 h-4 bg-red-400"/><span className="text-xs text-mid font-mono">Majoria: {Math.ceil((parl?.total||59)/2)} escons</span>
-                  </div>
-                  <div className="space-y-1">
-                    {parl?.partits.map(p => (
-                      <div key={p.nom} className="flex items-center gap-3 py-1.5 border-b border-border last:border-0">
-                        <div className="w-2.5 h-2.5 rounded-sm" style={{background:p.c}}/>
-                        <span className="text-sm font-semibold w-28">{p.nom}</span>
-                        <div className="flex-1 bg-paper rounded-sm h-2 overflow-hidden">
-                          <div className="h-full" style={{width:`${(p.n/59)*100}%`,background:p.c}}/>
-                        </div>
-                        <span className="font-mono text-sm font-bold w-6 text-right" style={{color:p.c}}>{p.n}</span>
-                      </div>
-                    ))}
-                  </div>
+                  <ParlamentBar data={parl} total={59} />
                 </div>
               </div>
             </div>
@@ -407,28 +429,50 @@ export default function Elect27() {
           <div className="space-y-4">
             {/* Selector d'illa */}
             <div>
-              <div className="font-mono text-[10px] tracking-[2px] uppercase text-mid mb-2">Filtra per illa</div>
+              <div className="font-mono text-[10px] tracking-[2px] uppercase text-mid mb-2">Selecciona illa</div>
               <div className="flex gap-2 flex-wrap">
-                {ILLES_CONSELLS.map(illa => (
+                {['Mallorca','Menorca','Eivissa','Formentera'].map(illa => (
                   <button key={illa} onClick={() => setIllaConsell(illa)}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all capitalize ${illaConsell === illa ? 'bg-ink text-white border-ink' : 'bg-white text-mid border-border hover:border-mid'}`}>
-                    {illa === 'totes' ? 'Totes les illes' : illa}
+                    className={`px-4 py-2 rounded-lg text-sm font-semibold border transition-all ${illaConsell===illa?'bg-ink text-white border-ink':'bg-white text-mid border-border hover:border-mid'}`}>
+                    {illa}
                   </button>
                 ))}
               </div>
             </div>
-            <div className="font-mono text-[10px] tracking-[2px] uppercase text-mid">
-              Candidatures als Consells Insulars{illaConsell !== 'totes' ? ` · ${illaConsell}` : ''}
+
+            {/* Resultats electorals del consell seleccionat */}
+            <div>
+              <div className="font-mono text-[10px] tracking-[2px] uppercase text-mid mb-2">
+                Resultats electorals · Consell Insular de {illaConsell}
+              </div>
+              <ConsellResultats illa={illaConsell} />
             </div>
-            <CandidaturesSection ambit="consell" illaFilter={illaConsell} />
+
+            {/* Candidatures */}
+            <div>
+              <div className="font-mono text-[10px] tracking-[2px] uppercase text-mid mb-2">
+                Candidatures 2027 · Consell Insular de {illaConsell}
+              </div>
+              <CandidaturesSection ambit="consell" illaFilter={illaConsell} />
+            </div>
           </div>
         )}
 
         {/* ── Ajuntaments ── */}
         {tab === 'municipis' && (
           <div className="space-y-4">
-            <div className="font-mono text-[10px] tracking-[2px] uppercase text-mid mb-3">Candidatures als Ajuntaments</div>
-            <CandidaturesSection ambit="ajuntament" />
+            <div className="bg-white rounded-card border border-border p-4">
+              <div className="font-mono text-[10px] tracking-[2px] uppercase text-mid mb-1">Composicions actuals 2023</div>
+              <p className="text-xs text-mid leading-relaxed">
+                Les dades de composició dels 67 ajuntaments (regidors per partit, alcalde/essa) les trobes a la secció{' '}
+                <a href="/ajuntaments" className="text-accent hover:underline font-semibold">Ajuntaments</a>.
+                Aquí es mostraran les candidatures 2027 a mesura que es confirmin.
+              </p>
+            </div>
+            <div>
+              <div className="font-mono text-[10px] tracking-[2px] uppercase text-mid mb-3">Candidatures 2027 als Ajuntaments</div>
+              <CandidaturesSection ambit="ajuntament" />
+            </div>
           </div>
         )}
 
