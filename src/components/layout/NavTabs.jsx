@@ -1,4 +1,3 @@
-// src/components/layout/NavTabs.jsx
 import { NavLink } from 'react-router-dom'
 
 const MINT = '#43F8CC'
@@ -11,24 +10,21 @@ const TABS = [
   { to: '/pobles',         label: 'Pobles',        icon: <IcoHouse /> },
   { to: '/eleccions-2027', label: 'Eleccions 2027',icon: <IcoCalendar /> },
   { to: '/governs',        label: 'Governs',       icon: <IcoLayers /> },
+  { to: '/blog',           label: 'Blog',          icon: <IcoBlog /> },
   { to: '/fonts',          label: 'Fonts',         icon: <IcoBook /> },
 ]
 
 export default function NavTabs() {
   return (
     <nav className="bg-ink sticky top-0 z-50 border-b border-white/8">
-      <div className="max-w-5xl mx-auto px-4 flex overflow-x-auto" style={{ scrollbarWidth: 'none' }}>
+      <div className="max-w-5xl mx-auto px-4 flex overflow-x-auto" style={{ scrollbarWidth:'none' }}>
         {TABS.map(({ to, label, icon }) => (
-          <NavLink
-            key={to}
-            to={to}
-            end={to === '/'}
+          <NavLink key={to} to={to} end={to === '/'}
             style={({ isActive }) => ({
               color: isActive ? MINT : 'rgba(255,255,255,0.5)',
               borderBottomColor: isActive ? MINT : 'transparent',
             })}
-            className="flex items-center gap-1.5 px-3.5 py-3.5 text-[11px] font-semibold whitespace-nowrap border-b-2 transition-all duration-150 hover:text-white/90"
-          >
+            className="flex items-center gap-1.5 px-3.5 py-3.5 text-[11px] font-semibold whitespace-nowrap border-b-2 transition-all duration-150 hover:text-white/90">
             {icon}
             <span className="hidden sm:inline">{label}</span>
             <span className="sm:hidden">{label.split(' ')[0]}</span>
@@ -39,11 +35,12 @@ export default function NavTabs() {
   )
 }
 
-function IcoBalance()  { return <svg className="w-3.5 h-3.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3v18M5 7l7-4 7 4M5 17l7 4 7-4M3 12h18"/></svg> }
+function IcoBalance()  { return <svg className="w-3.5 h-3.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><path d="M12 3v18M5 7l7-4 7 4M5 17l7 4 7-4M3 12h18"/></svg> }
 function IcoUsers()    { return <svg className="w-3.5 h-3.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg> }
 function IcoCompare()  { return <svg className="w-3.5 h-3.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg> }
-function IcoDoc()      { return <svg className="w-3.5 h-3.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg> }
+function IcoDoc()      { return <svg className="w-3.5 h-3.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/></svg> }
 function IcoHouse()    { return <svg className="w-3.5 h-3.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> }
 function IcoCalendar() { return <svg className="w-3.5 h-3.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> }
 function IcoLayers()   { return <svg className="w-3.5 h-3.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg> }
+function IcoBlog()     { return <svg className="w-3.5 h-3.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> }
 function IcoBook()     { return <svg className="w-3.5 h-3.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg> }
