@@ -22,11 +22,7 @@ export default function App() {
   return (
     <div className="min-h-screen bg-paper flex flex-col">
       <Routes>
-        <Route path="/admin/*" element={
-          <Suspense fallback={<LoadingSpinner />}>
-            <AdminLayout />
-          </Suspense>
-        } />
+        <Route path="/admin/*" element={<Suspense fallback={<LoadingSpinner />}><AdminLayout /></Suspense>} />
         <Route path="/*" element={<PublicLayout />} />
       </Routes>
     </div>
@@ -46,7 +42,8 @@ function PublicLayout() {
             <Route path="partits"         element={<Partits />} />
             <Route path="comparador"      element={<Comparador />} />
             <Route path="programes"       element={<Programes />} />
-            <Route path="pobles"          element={<Pobles />} />
+            <Route path="ajuntaments"     element={<Pobles />} />
+            <Route path="pobles"          element={<Pobles />} />  {/* redirect antic */}
             <Route path="eleccions-2027"  element={<Elect27 />} />
             <Route path="governs"         element={<Governs />} />
             <Route path="fonts"           element={<Fonts />} />
