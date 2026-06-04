@@ -4,18 +4,12 @@ export default function Cookies() {
     <div className="max-w-3xl mx-auto px-6 py-12">
       <div className="font-mono text-[10px] tracking-[2px] uppercase text-mid mb-2">BalearsPolitic</div>
       <h1 className="font-display text-4xl font-black text-ink mb-8">Política de Cookies</h1>
-
       <div className="space-y-8">
         <Section title="Quines cookies utilitza BalearsPolitic?">
-          <div className="bg-mes-bg border border-mes/20 rounded-lg p-4">
-            <div className="font-semibold text-mes text-sm mb-1">✓ Sense cookies de seguiment ni publicitat</div>
-            <p className="text-sm text-mes/80">BalearsPolitic no utilitza Google Analytics, Facebook Pixel, ni cap eina de seguiment. La teva navegació és completament privada.</p>
-          </div>
+          <p>BalearsPolitic utilitza dos tipus de cookies: tècniques (necessàries) i analítiques (Google Analytics).</p>
         </Section>
-
         <Section title="Cookies tècniques (estrictament necessàries)">
-          <p>Únicament utilitzem cookies tècniques necessàries per al funcionament del web:</p>
-          <div className="bg-white border border-border rounded-lg overflow-hidden mt-3">
+          <div className="bg-white border border-border rounded-lg overflow-hidden">
             <table className="w-full text-xs">
               <thead className="bg-ink/5">
                 <tr>
@@ -38,11 +32,36 @@ export default function Cookies() {
               </tbody>
             </table>
           </div>
-          <p className="mt-3 text-xs text-mid">Aquestes cookies <strong>només s'activen</strong> quan un administrador accedeix a l'àrea privada (/admin). Els usuaris generals no reben cap cookie.</p>
+          <p className="text-xs text-mid">Aquestes cookies <strong>només s'activen</strong> quan un administrador accedeix a /admin.</p>
         </Section>
-
+        <Section title="Cookies analítiques (Google Analytics)">
+          <div className="bg-white border border-border rounded-lg overflow-hidden">
+            <table className="w-full text-xs">
+              <thead className="bg-ink/5">
+                <tr>
+                  <th className="text-left px-4 py-2.5 font-mono uppercase tracking-wider text-mid text-[10px]">Cookie</th>
+                  <th className="text-left px-4 py-2.5 font-mono uppercase tracking-wider text-mid text-[10px]">Finalitat</th>
+                  <th className="text-left px-4 py-2.5 font-mono uppercase tracking-wider text-mid text-[10px]">Durada</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-border">
+                <tr>
+                  <td className="px-4 py-3 font-mono text-ink">_ga</td>
+                  <td className="px-4 py-3 text-mid">Identifica sessions úniques (anònim)</td>
+                  <td className="px-4 py-3 text-mid">2 anys</td>
+                </tr>
+                <tr>
+                  <td className="px-4 py-3 font-mono text-ink">_ga_HB6Y2XJ98P</td>
+                  <td className="px-4 py-3 text-mid">Mesura el trànsit de la propietat GA4</td>
+                  <td className="px-4 py-3 text-mid">2 anys</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p className="text-xs text-mid">Google Analytics recull dades <strong>anònimes</strong> sobre l'ús del web (pàgines visitades, temps, dispositiu). No permet identificar cap persona. <a href="https://policies.google.com/privacy" target="_blank" rel="noreferrer" className="text-accent hover:underline">Política de privacitat de Google</a>.</p>
+        </Section>
         <Section title="Com gestionar les cookies">
-          <p>Pots eliminar les cookies des de la configuració del teu navegador. Aquí tens els enllaços de cada navegador principal:</p>
+          <p>Pots eliminar o bloquejar les cookies des del teu navegador:</p>
           <div className="flex flex-wrap gap-2 mt-2">
             {[
               {nom:'Chrome', url:'https://support.google.com/chrome/answer/95647'},
@@ -56,24 +75,16 @@ export default function Cookies() {
               </a>
             ))}
           </div>
+          <p className="text-xs text-mid mt-2">També pots optar per no ser seguit per Google Analytics instal·lant el <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noreferrer" className="text-accent hover:underline">complement de inhabilitació de GA</a>.</p>
         </Section>
-
-        <Section title="Canvis en aquesta política">
-          <p>Qualsevol canvi en l'ús de cookies es comunicarà actualitzant aquesta pàgina. Donat que BalearsPolitic no utilitza cookies de seguiment, és poc probable que hi hagi canvis significatius.</p>
-        </Section>
-
         <Section title="Contacte">
-          <p>Per a qualsevol dubte sobre cookies o privacitat: <a href="mailto:boocman@gmail.com" className="text-accent hover:underline">hola@balearspolitic.cat</a></p>
+          <p>Per a qualsevol dubte: <a href="mailto:boocman@gmail.com" className="text-accent hover:underline">boocman@gmail.com</a></p>
         </Section>
       </div>
-
-      <div className="mt-12 pt-6 border-t border-border font-mono text-[10px] text-mid">
-        Última actualització: juny 2026
-      </div>
+      <div className="mt-12 pt-6 border-t border-border font-mono text-[10px] text-mid">Última actualització: juny 2026</div>
     </div>
   )
 }
-
 function Section({ title, children }) {
   return (
     <div>
