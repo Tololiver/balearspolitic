@@ -7,7 +7,7 @@ export default function Privacitat() {
 
       <div className="space-y-8">
         <Section title="1. Responsable del tractament">
-          <p>Tolo Oliver · BalearsPolitic · hola@balearspolitic.cat</p>
+          <p>Tolo Oliver · BalearsPolitic · boocman@gmail.com</p>
         </Section>
 
         <Section title="2. Dades que recollim">
@@ -37,7 +37,7 @@ export default function Privacitat() {
         </Section>
 
         <Section title="7. Drets de les persones">
-          <p>D'acord amb el RGPD, tens dret a accedir, rectificar, suprimir, limitar el tractament i portar les teves dades. Per exercir-los, posa't en contacte a <a href="mailto:hola@balearspolitic.cat" className="text-accent hover:underline">hola@balearspolitic.cat</a>. Tens dret a presentar una reclamació davant l'Agència Espanyola de Protecció de Dades (aepd.es).</p>
+          <p>D'acord amb el RGPD, tens dret a accedir, rectificar, suprimir, limitar el tractament i portar les teves dades. Per exercir-los, posa't en contacte a <a href="mailto:hola@balearspolitic.cat" className="text-accent hover:underline">boocman@gmail.com</a>. Tens dret a presentar una reclamació davant l'Agència Espanyola de Protecció de Dades (aepd.es).</p>
         </Section>
 
         <Section title="8. Conservació de les dades">
