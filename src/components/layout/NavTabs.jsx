@@ -3,23 +3,24 @@ import { NavLink } from 'react-router-dom'
 const MINT = '#43F8CC'
 
 const TABS = [
-  { to: '/',               label: 'PP vs PSOE',    icon: <IcoBalance /> },
-  { to: '/partits',        label: 'Fitxes',        icon: <IcoUsers /> },
-  { to: '/comparador',     label: 'Comparador',    icon: <IcoCompare /> },
-  { to: '/programes',      label: 'Programes',     icon: <IcoDoc /> },
-  { to: '/pobles',         label: 'Pobles',        icon: <IcoHouse /> },
-  { to: '/eleccions-2027', label: 'Eleccions 2027',icon: <IcoCalendar /> },
-  { to: '/governs',        label: 'Governs',       icon: <IcoLayers /> },
-  { to: '/blog',           label: 'Blog',          icon: <IcoBlog /> },
-  { to: '/fonts',          label: 'Fonts',         icon: <IcoBook /> },
+  { to:'/',              label:'Inici',          icon:<IcoHome />,     end:true },
+  { to:'/pp-vs-psoe',   label:'PP vs PSOE',     icon:<IcoBalance /> },
+  { to:'/partits',      label:'Fitxes',          icon:<IcoUsers /> },
+  { to:'/comparador',   label:'Comparador',      icon:<IcoCompare /> },
+  { to:'/programes',    label:'Programes',       icon:<IcoDoc /> },
+  { to:'/pobles',       label:'Pobles',          icon:<IcoHouse /> },
+  { to:'/eleccions-2027',label:'Eleccions 2027', icon:<IcoCalendar /> },
+  { to:'/governs',      label:'Governs',         icon:<IcoLayers /> },
+  { to:'/blog',         label:'Blog',            icon:<IcoBlog /> },
+  { to:'/fonts',        label:'Fonts',           icon:<IcoBook /> },
 ]
 
 export default function NavTabs() {
   return (
     <nav className="bg-ink sticky top-0 z-50 border-b border-white/8">
-      <div className="max-w-5xl mx-auto px-4 flex overflow-x-auto" style={{ scrollbarWidth:'none' }}>
-        {TABS.map(({ to, label, icon }) => (
-          <NavLink key={to} to={to} end={to === '/'}
+      <div className="max-w-5xl mx-auto px-4 flex overflow-x-auto" style={{scrollbarWidth:'none'}}>
+        {TABS.map(({ to, label, icon, end }) => (
+          <NavLink key={to+label} to={to} end={end}
             style={({ isActive }) => ({
               color: isActive ? MINT : 'rgba(255,255,255,0.5)',
               borderBottomColor: isActive ? MINT : 'transparent',
@@ -35,6 +36,7 @@ export default function NavTabs() {
   )
 }
 
+function IcoHome()     { return <svg className="w-3.5 h-3.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> }
 function IcoBalance()  { return <svg className="w-3.5 h-3.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><path d="M12 3v18M5 7l7-4 7 4M5 17l7 4 7-4M3 12h18"/></svg> }
 function IcoUsers()    { return <svg className="w-3.5 h-3.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg> }
 function IcoCompare()  { return <svg className="w-3.5 h-3.5 flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg> }

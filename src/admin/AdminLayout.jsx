@@ -6,6 +6,7 @@ import AdminPobles    from './AdminPobles'
 import AdminGoverns   from './AdminGoverns'
 import AdminProgrames from './AdminProgrames'
 import AdminBlog      from './AdminBlog'
+import AdminHome      from './AdminHome'
 import { LoadingSpinner } from '@/components/ui'
 
 const ADMIN_EMAIL = import.meta.env.VITE_ADMIN_EMAIL
@@ -29,20 +30,21 @@ export default function AdminLayout() {
       <aside className="w-56 bg-ink text-white flex-shrink-0 flex flex-col">
         <div className="p-5 border-b border-white/10">
           <div className="font-display text-lg font-black leading-none">
-            Balears<em className="not-italic" style={{ color:'#43F8CC' }}>Politic</em>
+            Balears<em className="not-italic" style={{color:'#43F8CC'}}>Politic</em>
           </div>
           <div className="font-mono text-[9px] tracking-widest uppercase text-white/30 mt-1">CMS Admin</div>
         </div>
         <nav className="flex-1 p-3 space-y-1">
           {[
-            { to:'/admin',           label:'Dashboard',  icon:'◼' },
+            { to:'/admin',           label:'Dashboard',  icon:'◼', end:true },
+            { to:'/admin/home',      label:'Home',       icon:'🏠' },
             { to:'/admin/blog',      label:'Blog',       icon:'✏️' },
             { to:'/admin/partits',   label:'Partits',    icon:'🏛' },
-            { to:'/admin/pobles',    label:'Municipis',  icon:'🏠' },
+            { to:'/admin/pobles',    label:'Municipis',  icon:'📍' },
             { to:'/admin/governs',   label:'Governs',    icon:'📅' },
             { to:'/admin/programes', label:'Programes',  icon:'📋' },
-          ].map(({ to, label, icon }) => (
-            <NavLink key={to} to={to} end={to === '/admin'}
+          ].map(({ to, label, icon, end }) => (
+            <NavLink key={to} to={to} end={end}
               className={({ isActive }) =>
                 `flex items-center gap-2.5 px-3 py-2 rounded text-sm font-medium transition-colors
                  ${isActive ? 'bg-white/10 text-white' : 'text-white/45 hover:text-white/70 hover:bg-white/5'}`
@@ -61,8 +63,9 @@ export default function AdminLayout() {
       </aside>
       <main className="flex-1 overflow-auto">
         <Routes>
-          <Route index          element={<AdminDashboard />} />
-          <Route path="blog"    element={<AdminBlog />} />
+          <Route index            element={<AdminDashboard />} />
+          <Route path="home"      element={<AdminHome />} />
+          <Route path="blog"      element={<AdminBlog />} />
           <Route path="partits"   element={<AdminPartits />} />
           <Route path="pobles"    element={<AdminPobles />} />
           <Route path="governs"   element={<AdminGoverns />} />
@@ -89,10 +92,9 @@ function AdminLogin({ loading, setLoading }) {
         </div>
         <div className="font-mono text-[10px] tracking-widest uppercase text-mid mb-6">CMS Admin</div>
         <button onClick={handleGoogle} disabled={loading}
-          className="w-full bg-ink text-white rounded-lg py-3 text-sm font-semibold hover:bg-ink/90 transition-colors disabled:opacity-50">
+          className="w-full bg-ink text-white rounded-lg py-3 text-sm font-semibold hover:bg-ink/90 disabled:opacity-50">
           {loading ? 'Entrant...' : 'Accedir amb Google'}
         </button>
-        <p className="text-xs text-mid mt-4">Accés restringit als administradors autoritzats.</p>
       </div>
     </div>
   )
@@ -117,10 +119,11 @@ function AdminDashboard() {
       <p className="text-mid text-sm mb-8">Benvingut al CMS de BalearsPolitic.</p>
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
         {[
-          { label:'Blog', icon:'✏️', to:'/admin/blog' },
-          { label:'Partits', icon:'🏛', to:'/admin/partits' },
-          { label:'Municipis', icon:'🏠', to:'/admin/pobles' },
-          { label:'Governs', icon:'📅', to:'/admin/governs' },
+          { label:'Home',      icon:'🏠', to:'/admin/home' },
+          { label:'Blog',      icon:'✏️', to:'/admin/blog' },
+          { label:'Partits',   icon:'🏛', to:'/admin/partits' },
+          { label:'Municipis', icon:'📍', to:'/admin/pobles' },
+          { label:'Governs',   icon:'📅', to:'/admin/governs' },
           { label:'Programes', icon:'📋', to:'/admin/programes' },
         ].map(({ label, icon, to }) => (
           <NavLink key={label} to={to}

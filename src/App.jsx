@@ -3,9 +3,9 @@ import { Suspense, lazy } from 'react'
 import Header from '@/components/layout/Header'
 import NavTabs from '@/components/layout/NavTabs'
 import Footer from '@/components/layout/Footer'
-import BlogWidget from '@/components/ui/BlogWidget'
 import { LoadingSpinner } from '@/components/ui'
 
+const Home        = lazy(() => import('@/pages/Home'))
 const Comparativa = lazy(() => import('@/components/sections/Comparativa'))
 const Partits     = lazy(() => import('@/components/sections/Partits'))
 const Comparador  = lazy(() => import('@/components/sections/Comparador'))
@@ -41,7 +41,8 @@ function PublicLayout() {
       <main className="flex-1">
         <Suspense fallback={<LoadingSpinner />}>
           <Routes>
-            <Route index                  element={<><Comparativa /><BlogWidget /></>} />
+            <Route index                  element={<Home />} />
+            <Route path="pp-vs-psoe"      element={<Comparativa />} />
             <Route path="partits"         element={<Partits />} />
             <Route path="comparador"      element={<Comparador />} />
             <Route path="programes"       element={<Programes />} />
@@ -51,7 +52,7 @@ function PublicLayout() {
             <Route path="fonts"           element={<Fonts />} />
             <Route path="blog"            element={<Blog />} />
             <Route path="blog/:slug"      element={<BlogPost />} />
-            <Route path="*"               element={<Comparativa />} />
+            <Route path="*"               element={<Home />} />
           </Routes>
         </Suspense>
       </main>
