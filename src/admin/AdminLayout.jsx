@@ -8,6 +8,7 @@ import AdminProgrames    from './AdminProgrames'
 import AdminBlog         from './AdminBlog'
 import AdminHome         from './AdminHome'
 import AdminCandidatures from './AdminCandidatures'
+import AdminSondejos    from './AdminSondejos'
 import { LoadingSpinner } from '@/components/ui'
 
 const ADMIN_EMAIL = import.meta.env.VITE_ADMIN_EMAIL
@@ -35,6 +36,7 @@ export default function AdminLayout() {
     { to:'/admin/governs',      label:'Governs',        icon:'📅' },
     { to:'/admin/programes',    label:'Programes',      icon:'📋' },
     { to:'/admin/candidatures', label:'Candidatures 27',icon:'🗳' },
+    { to:'/admin/sondejos',      label:'Sondejos 2027',  icon:'📊' },
   ]
 
   return (
@@ -76,6 +78,7 @@ export default function AdminLayout() {
           <Route path="governs"     element={<AdminGoverns />} />
           <Route path="programes"   element={<AdminProgrames />} />
           <Route path="candidatures" element={<AdminCandidatures />} />
+          <Route path="sondejos"     element={<AdminSondejos />} />
         </Routes>
       </main>
     </div>
