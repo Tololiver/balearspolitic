@@ -1,26 +1,32 @@
 // src/components/sections/Pobles.jsx
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import { usePobles } from '@/hooks/useData'
-import {
-  SectionTitleBar, ContentWrap, SeatsBar, LoadingSpinner, EmptyState, SearchInput
-} from '@/components/ui'
+import { SectionTitleBar, ContentWrap, SeatsBar, LoadingSpinner, EmptyState, SearchInput } from '@/components/ui'
 import { clsx } from 'clsx'
 
 const ILLES = ['totes', 'Mallorca', 'Menorca', 'Eivissa', 'Formentera']
 const GOVERN_FILTERS = [
   { val: 'totes', label: 'Tots' },
-  { val: 'PP',    label: 'PP governa',    color: '#0e2a6e' },
-  { val: 'PSIB',  label: 'PSIB governa',  color: '#b82012' },
-  { val: 'Mes',   label: 'Mes/Prog',      color: '#1a5c30' },
+  { val: 'PP',    label: 'PP governa',   color: '#0e2a6e' },
+  { val: 'PSIB',  label: 'PSIB governa', color: '#b82012' },
+  { val: 'Mes',   label: 'Més/Prog',     color: '#1a5c30' },
 ]
 
 export default function Pobles() {
-  const [search,     setSearch]     = useState('')
-  const [illa,       setIlla]       = useState('totes')
-  const [governFil,  setGovernFil]  = useState('totes')
-  const [openPoble,  setOpenPoble]  = useState(null)
+  const [search,    setSearch]    = useState('')
+  const [illa,      setIlla]      = useState('totes')
+  const [governFil, setGovernFil] = useState('totes')
+  const [openId,    setOpenId]    = useState(null)  // un sol id obert alhora
 
   const { data: pobles, isLoading } = usePobles({ illa, governParti: governFil, search })
+
+  // Accordion: tanca l'anterior quan n'obres un de nou
+  const toggle = useCallback((id) => {
+    setOpenId(prev => prev === id ? null : id)
+  }, [])
+
+  const setIllaFilter = (val) => { setIlla(val); setGovernFil('totes'); setOpenId(null) }
+  const setGovernFilter = (val) => { setGovernFil(val); setIlla('totes'); setOpenId(null) }
 
   return (
     <>
@@ -30,30 +36,23 @@ export default function Pobles() {
         sub="Alcalde/essa, composicio del consistori i distribucio de regidors per partit."
         gradient="from-ink to-[#0a1a2a]"
       />
-
       <ContentWrap>
-        {/* Search + filters */}
+        {/* Search */}
         <div className="space-y-3 mb-5">
           <SearchInput value={search} onChange={setSearch} placeholder="Cerca un municipi..." />
 
           {/* Illa filters */}
           <div className="flex flex-wrap gap-2">
             {ILLES.map(i => (
-              <button
-                key={i}
-                onClick={() => { setIlla(i); setGovernFil('totes') }}
-                className={clsx('filter-pill capitalize', illa === i && governFil === 'totes' ? 'active' : '')}
-              >
+              <button key={i} onClick={() => setIllaFilter(i)}
+                className={clsx('filter-pill capitalize', illa === i && governFil === 'totes' ? 'active' : '')}>
                 {i === 'totes' ? 'Totes les Illes' : i}
               </button>
             ))}
             <div className="w-px h-5 bg-border self-center mx-1" />
             {GOVERN_FILTERS.slice(1).map(gf => (
-              <button
-                key={gf.val}
-                onClick={() => { setGovernFil(gf.val); setIlla('totes') }}
-                className={clsx('filter-pill', governFil === gf.val ? 'active' : '')}
-              >
+              <button key={gf.val} onClick={() => setGovernFilter(gf.val)}
+                className={clsx('filter-pill', governFil === gf.val ? 'active' : '')}>
                 {gf.color && <span className="inline-block w-2 h-2 rounded-sm mr-1.5 align-middle" style={{ background: gf.color }} />}
                 {gf.label}
               </button>
@@ -61,7 +60,7 @@ export default function Pobles() {
           </div>
         </div>
 
-        {/* Disclaimer */}
+        {/* Nota */}
         <div className="text-xs text-mid/70 bg-white rounded-lg px-4 py-3 border-l-2 border-border mb-5">
           Dades del 28M 2023. Alguns municipis han pogut tenir canvis posteriors (mocions de censura, etc.).
           Fonts: Wikipedia EN, Ultima Hora, Diario de Mallorca.
@@ -73,13 +72,13 @@ export default function Pobles() {
         ) : !pobles?.length ? (
           <EmptyState title="Cap municipi trobat" sub="Prova un altre terme de cerca o filtre." />
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
             {pobles.map(p => (
-              <PobleCar
+              <PoblaCard
                 key={p.id}
                 poble={p}
-                isOpen={openPoble === p.id}
-                onToggle={() => setOpenPoble(openPoble === p.id ? null : p.id)}
+                isOpen={openId === p.id}
+                onToggle={() => toggle(p.id)}
               />
             ))}
           </div>
@@ -89,17 +88,17 @@ export default function Pobles() {
   )
 }
 
-function PobleCar({ poble: p, isOpen, onToggle }) {
+function PoblaCard({ poble: p, isOpen, onToggle }) {
   const regidors = p.regidors || []
-  const total    = p.total_regidors || regidors.reduce((s, r) => s + r.n, 0)
+  const total    = p.total_regidors || regidors.reduce((s, r) => s + (r.n || 0), 0)
 
   return (
     <div
-      className={clsx(
-        'bg-white rounded-card shadow-card border-2 overflow-hidden cursor-pointer transition-all',
-        isOpen ? 'shadow-lg' : 'hover:shadow-md'
-      )}
-      style={{ borderColor: isOpen ? p.color_govern : 'transparent' }}
+      className="bg-white rounded-card shadow-card overflow-hidden cursor-pointer transition-all duration-150"
+      style={{
+        border: `2px solid ${isOpen ? p.color_govern : 'transparent'}`,
+        boxShadow: isOpen ? `0 4px 20px ${p.color_govern}22` : undefined
+      }}
       onClick={onToggle}
     >
       {/* Head */}
@@ -108,7 +107,7 @@ function PobleCar({ poble: p, isOpen, onToggle }) {
           <div className="font-display text-lg font-black text-white leading-none">{p.nom}</div>
           <div className="font-mono text-[9px] uppercase tracking-[1.5px] text-white/55 mt-1">{p.illa}</div>
         </div>
-        <div className="font-mono text-[10px] text-white/60 bg-white/15 rounded-full px-2 py-0.5 whitespace-nowrap">
+        <div className="font-mono text-[10px] text-white/60 bg-white/15 rounded-full px-2 py-0.5 whitespace-nowrap ml-2">
           {p.poblacio?.toLocaleString('ca')} hab.
         </div>
       </div>
@@ -120,32 +119,38 @@ function PobleCar({ poble: p, isOpen, onToggle }) {
         </div>
         <SeatsBar regidors={regidors} total={total} height="h-1.5" className="mb-2" />
         <div className="flex justify-between items-center">
-          <span
-            className="font-mono text-[10px] font-bold text-white rounded px-2 py-0.5"
-            style={{ background: p.color_govern }}
-          >
+          <span className="font-mono text-[10px] font-bold text-white rounded px-2 py-0.5" style={{ background: p.color_govern }}>
             {p.govern_parti} governa
           </span>
-          <span className="text-[10px] text-mid">
-            {isOpen ? '▲ tancar' : `${total} regidors ↓`}
+          <span className="text-[10px] text-mid flex items-center gap-1">
+            {isOpen ? (
+              <><svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="18 15 12 9 6 15"/></svg> tancar</>
+            ) : (
+              <><svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="6 9 12 15 18 9"/></svg> {total} regidors</>
+            )}
           </span>
         </div>
       </div>
 
       {/* Expanded */}
       {isOpen && (
-        <div className="border-t border-border px-4 pb-4 pt-3 bg-cream">
+        <div className="border-t border-border px-4 pb-4 pt-3 bg-cream" onClick={e => e.stopPropagation()}>
           <div className="font-mono text-[9px] uppercase tracking-[1.5px] text-mid mb-2">
-            Regidors ({total} total)
+            Composició del consistori ({total} regidors)
           </div>
-          <div className="space-y-1">
+          {/* Visual bar with labels */}
+          <SeatsBar regidors={regidors} total={total} height="h-3" className="mb-3 rounded" />
+          <div className="space-y-0">
             {regidors.map((r, i) => (
-              <div key={i} className="flex items-center justify-between text-xs py-1 border-b border-border last:border-0">
+              <div key={i} className="flex items-center justify-between text-xs py-1.5 border-b border-border last:border-0">
                 <div className="flex items-center gap-2">
                   <span className="w-2.5 h-2.5 rounded-sm flex-shrink-0" style={{ background: r.color || r.c }} />
                   <span className="text-mid">{r.p || r.parti}</span>
                 </div>
-                <span className="font-mono font-semibold text-ink">{r.n}</span>
+                <div className="flex items-center gap-2">
+                  <div className="h-1.5 rounded-sm" style={{ width: `${Math.round((r.n/total)*60)}px`, background: r.color || r.c }} />
+                  <span className="font-mono font-semibold text-ink w-4 text-right">{r.n}</span>
+                </div>
               </div>
             ))}
           </div>
