@@ -1,0 +1,280 @@
+/* src/components/sections/Comparativa.css */
+.comparativa-wrap { max-width: 960px; margin: 0 auto; padding: 0 24px 80px; }
+
+  .comparativa-wrap-root {
+    --pp-blue: #003087; --pp-light: #d6e4ff;
+    --psoe-red: #c0392b; --psoe-light: #fde8e6;
+    --neutral: #1a1a2e; --neutral-mid: #4a4a6a;
+    --neutral-light: #f5f5f0;
+    --same: #2d6a4f; --same-bg: #d8f3dc;
+    --diff: #774936; --diff-bg: #f4e0d9;
+    --white: #ffffff; --border: #e0e0e8;
+    --shadow: 0 4px 24px rgba(0,0,0,0.08);
+    --accent: #4a9eff;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'DM Sans',sans-serif; background:var(--neutral-light); color:var(--neutral); line-height:1.65; }
+
+  /* ── HEADER ── */
+  header { background:var(--neutral); color:var(--white); padding:48px 40px 40px; position:relative; overflow:hidden; }
+  header::before { content:''; position:absolute; inset:0; background:linear-gradient(135deg,#003087 0%,#1a1a2e 50%,#c0392b 100%); opacity:.85; }
+  header::after { content:''; position:absolute; inset:0; background:repeating-linear-gradient(90deg,transparent,transparent 80px,rgba(255,255,255,.03) 80px,rgba(255,255,255,.03) 81px); }
+  header > * { position:relative; z-index:1; }
+  .header-label { font-size:11px; font-weight:600; letter-spacing:3px; text-transform:uppercase; color:rgba(255,255,255,.5); margin-bottom:12px; }
+  h1 { font-family:'Playfair Display',serif; font-size:clamp(28px,5vw,52px); font-weight:900; line-height:1.1; margin-bottom:10px; letter-spacing:-.5px; }
+  .header-sub { font-size:14px; color:rgba(255,255,255,.6); max-width:640px; font-weight:300; margin-bottom:32px; }
+  .protagonists { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .protagonist-card { border-radius:12px; padding:18px 22px; backdrop-filter:blur(8px); }
+  .protagonist-card.pp { background:rgba(0,48,135,.5); border:1px solid rgba(0,100,255,.3); }
+  .protagonist-card.psoe { background:rgba(192,57,43,.5); border:1px solid rgba(255,100,80,.3); }
+  .party-tag { font-size:10px; font-weight:700; letter-spacing:2.5px; text-transform:uppercase; color:rgba(255,255,255,.5); margin-bottom:5px; }
+  .protagonist-name { font-family:'Playfair Display',serif; font-size:20px; font-weight:700; color:#fff; margin-bottom:3px; }
+  .protagonist-role { font-size:12.5px; color:rgba(255,255,255,.6); }
+  .protagonist-years { margin-top:8px; font-size:11.5px; color:rgba(255,255,255,.5); border-top:1px solid rgba(255,255,255,.1); padding-top:8px; }
+
+  /* ── NAV TABS ── */
+  .tab-nav { background:var(--neutral); position:sticky; top:0; z-index:100; box-shadow:0 2px 12px rgba(0,0,0,.3); }
+  .tab-nav-inner { max-width:960px; margin:0 auto; padding:0 20px; display:flex; gap:2px; overflow-x:auto; }
+  .tab-btn { padding:12px 16px; background:none; border:none; border-bottom:3px solid transparent; color:rgba(255,255,255,.45); font-family:inherit; font-size:12px; font-weight:600; cursor:pointer; white-space:nowrap; transition:all .15s; letter-spacing:.3px; }
+  .tab-btn:hover { color:rgba(255,255,255,.75); }
+  .tab-btn.active { color:var(--accent); border-bottom-color:var(--accent); }
+
+  /* ── SECTIONS ── */
+  .tab-section { display:none; }
+  .tab-section.active { display:block; }
+
+  /* ── INTRO BOX ── */
+  .intro-wrap { max-width:960px; margin:40px auto 0; padding:0 24px; }
+  .intro-box { background:var(--white); border-radius:12px; padding:28px 32px; box-shadow:var(--shadow); border-left:4px solid var(--neutral-mid); }
+  .intro-box h2 { font-family:'Playfair Display',serif; font-size:19px; margin-bottom:10px; }
+  .intro-box p { font-size:14px; color:var(--neutral-mid); line-height:1.75; }
+
+  /* ── MAIN CONTENT ── */
+  .content-wrap { max-width:960px; margin:0 auto; padding:36px 24px 80px; }
+  .block { margin-bottom:48px; }
+  .block-header { display:flex; align-items:center; gap:14px; margin-bottom:20px; padding-bottom:14px; border-bottom:2px solid var(--border); }
+  .block-icon { width:44px; height:44px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:20px; background:var(--neutral); flex-shrink:0; }
+  .block-title { font-family:'Playfair Display',serif; font-size:23px; font-weight:700; color:var(--neutral); }
+  .block-num { font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--neutral-mid); opacity:.5; }
+  .context-box { background:var(--white); border-radius:10px; padding:18px 22px; margin-bottom:18px; border-left:3px solid var(--neutral-mid); font-size:13.5px; color:var(--neutral-mid); line-height:1.7; }
+  .context-box strong { color:var(--neutral); font-weight:600; }
+  .positions-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:18px; }
+  .position-card { border-radius:10px; padding:20px 20px 18px; box-shadow:var(--shadow); }
+  .position-card.pp { background:linear-gradient(135deg,#f0f5ff 0%,var(--white) 100%); border-top:3px solid var(--pp-blue); }
+  .position-card.psoe { background:linear-gradient(135deg,#fff3f2 0%,var(--white) 100%); border-top:3px solid var(--psoe-red); }
+  .position-party { display:flex; align-items:center; gap:8px; margin-bottom:12px; }
+  .party-dot { width:10px; height:10px; border-radius:50%; flex-shrink:0; }
+  .pp .party-dot { background:var(--pp-blue); }
+  .psoe .party-dot { background:var(--psoe-red); }
+  .party-name-label { font-size:10px; font-weight:700; letter-spacing:2px; text-transform:uppercase; }
+  .pp .party-name-label { color:var(--pp-blue); }
+  .psoe .party-name-label { color:var(--psoe-red); }
+  .position-card ul { list-style:none; padding:0; }
+  .position-card ul li { font-size:13.5px; color:var(--neutral-mid); padding:5px 0 5px 18px; position:relative; line-height:1.55; border-bottom:1px solid var(--border); }
+  .position-card ul li:last-child { border-bottom:none; }
+  .position-card ul li::before { content:'→'; position:absolute; left:0; font-size:11px; top:6px; }
+  .pp .position-card ul li::before { color:var(--pp-blue); }
+  .psoe .position-card ul li::before { color:var(--psoe-red); }
+  .comparison-row { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  .comp-box { border-radius:8px; padding:16px 18px; font-size:13px; line-height:1.6; }
+  .comp-box.same { background:var(--same-bg); border:1px solid rgba(45,106,79,.2); color:var(--same); }
+  .comp-box.diff { background:var(--diff-bg); border:1px solid rgba(119,73,54,.2); color:var(--diff); }
+  .comp-label { font-size:10px; font-weight:700; letter-spacing:2px; text-transform:uppercase; margin-bottom:6px; display:flex; align-items:center; gap:6px; }
+  .comp-label .dot { width:7px; height:7px; border-radius:50%; }
+  .comp-box.same .dot { background:var(--same); }
+  .comp-box.diff .dot { background:var(--diff); }
+  .section-divider { border:none; border-top:1px solid var(--border); margin:48px 0; }
+
+  /* ── SECTION TITLE ── */
+  .sec-title-bar { background:var(--neutral); padding:32px 40px 28px; position:relative; overflow:hidden; }
+  .sec-title-bar::before { content:''; position:absolute; inset:0; opacity:.7; }
+  .sec-title-bar > * { position:relative; z-index:1; }
+  .sec-label { font-size:10px; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:rgba(255,255,255,.35); margin-bottom:6px; }
+  .sec-main-title { font-family:'Playfair Display',serif; font-size:clamp(22px,4vw,36px); font-weight:900; color:#fff; line-height:1.1; }
+  .sec-sub { font-size:13px; color:rgba(255,255,255,.5); margin-top:6px; font-weight:300; }
+
+  /* ── PARTY CARDS ── */
+  .party-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(272px,1fr)); gap:14px; }
+  .pcard { background:var(--white); border-radius:12px; overflow:hidden; box-shadow:var(--shadow); cursor:pointer; border:2px solid transparent; transition:border-color .15s; }
+  .pcard:hover { border-color:rgba(0,0,0,.1); }
+  .pcard.open { border-color:var(--pcolor,#333); }
+  .pcard-head { padding:14px 18px; color:#fff; display:flex; justify-content:space-between; align-items:flex-start; }
+  .pcard-name { font-family:'Playfair Display',serif; font-size:18px; font-weight:900; color:#fff; }
+  .pcard-ideology { font-size:11px; color:rgba(255,255,255,.6); margin-top:2px; }
+  .pcard-seats { background:rgba(255,255,255,.2); border-radius:20px; padding:3px 10px; font-size:13px; font-weight:700; color:#fff; text-align:center; white-space:nowrap; }
+  .pcard-status { font-size:10px; font-weight:700; letter-spacing:1px; color:rgba(255,255,255,.5); margin-top:4px; text-align:right; }
+  .pcard-body { padding:14px 18px; }
+  .pcard-meta { font-size:12px; color:#888; margin-bottom:7px; }
+  .pcard-desc { font-size:13px; color:#555; line-height:1.6; }
+  .pcard-toggle { font-size:11px; font-weight:600; margin-top:8px; }
+  .pcard-positions { border-top:1px solid var(--border); padding:14px 18px; display:none; }
+  .pcard.open .pcard-positions { display:block; }
+  .pos-topic { margin-bottom:10px; }
+  .pos-topic-label { font-size:10px; font-weight:700; letter-spacing:2px; text-transform:uppercase; margin-bottom:3px; }
+  .pos-topic-text { font-size:12.5px; color:#444; line-height:1.6; }
+
+  /* ── COMPARADOR ── */
+  .compare-selectors { display:grid; grid-template-columns:1fr 1fr; gap:16px; background:var(--white); border-radius:12px; padding:20px 24px; box-shadow:var(--shadow); margin-bottom:20px; }
+  .compare-sel-label { font-size:10px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:#aaa; margin-bottom:6px; }
+  .compare-sel select { width:100%; padding:10px 14px; border-radius:8px; font-size:13px; font-weight:600; font-family:inherit; cursor:pointer; }
+  .compare-headers { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:14px; }
+  .compare-party-head { border-radius:10px; padding:14px 18px; color:#fff; }
+  .compare-party-name { font-family:'Playfair Display',serif; font-size:20px; font-weight:900; }
+  .compare-party-sub { font-size:11px; color:rgba(255,255,255,.6); margin-top:2px; }
+  .compare-party-info { font-size:12px; color:rgba(255,255,255,.65); margin-top:7px; }
+  .topic-pills { display:flex; flex-wrap:wrap; gap:7px; margin-bottom:16px; }
+  .topic-pill { padding:5px 12px; border-radius:20px; border:2px solid var(--border); background:var(--white); color:#666; font-size:12px; font-weight:600; cursor:pointer; font-family:inherit; transition:all .12s; }
+  .topic-pill:hover { border-color:#aaa; }
+  .topic-pill.active { background:var(--neutral); color:#fff; border-color:var(--neutral); }
+  .compare-topic-block { margin-bottom:12px; }
+  .compare-topic-header { display:flex; align-items:center; gap:8px; margin-bottom:8px; }
+  .compare-topic-icon { font-size:16px; }
+  .compare-topic-title { font-family:'Playfair Display',serif; font-size:16px; font-weight:700; color:var(--neutral); }
+  .compare-cols { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+  .compare-col { background:var(--white); border-radius:8px; padding:13px 15px; box-shadow:0 1px 6px rgba(0,0,0,.05); }
+  .compare-col-label { font-size:10px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; margin-bottom:5px; }
+  .compare-col-text { font-size:13px; color:var(--neutral-mid); line-height:1.65; }
+
+  /* ── PROGRAMES ELECTORALS ── */
+  .year-tabs { display:flex; gap:10px; margin-bottom:20px; }
+  .year-tab { flex:1; padding:12px 0; border-radius:10px; border:2px solid var(--border); background:var(--white); color:#666; font-size:15px; font-weight:700; cursor:pointer; font-family:inherit; transition:all .12s; }
+  .year-tab.active { background:var(--neutral); color:#fff; border-color:var(--neutral); }
+  .election-block { display:none; }
+  .election-block.active { display:block; }
+  .election-header { background:var(--neutral); border-radius:12px; padding:20px 24px; margin-bottom:20px; position:relative; overflow:hidden; }
+  .election-header::before { content:''; position:absolute; inset:0; opacity:.7; }
+  .election-header > * { position:relative; z-index:1; }
+  .election-date { font-size:11px; font-weight:600; letter-spacing:2.5px; text-transform:uppercase; color:rgba(255,255,255,.4); margin-bottom:4px; }
+  .election-title { font-family:'Playfair Display',serif; font-size:20px; font-weight:900; color:#fff; }
+  .election-coalition { font-size:12.5px; color:rgba(255,255,255,.5); margin-top:3px; margin-bottom:14px; }
+  .seats-bar { display:flex; height:14px; border-radius:7px; overflow:hidden; margin-bottom:8px; }
+  .seats-bar-seg { height:100%; }
+  .seats-legend { display:flex; gap:10px; flex-wrap:wrap; }
+  .seats-legend-item { font-size:11px; color:rgba(255,255,255,.55); display:flex; align-items:center; gap:3px; }
+  .seats-legend-dot { width:8px; height:8px; border-radius:2px; flex-shrink:0; }
+  .prog-cards { display:grid; gap:10px; }
+  .prog-card { background:var(--white); border-radius:10px; overflow:hidden; box-shadow:var(--shadow); border:2px solid transparent; }
+  .prog-card.open { border-color:var(--pcolor,#333); }
+  .prog-card-head { padding:13px 16px; cursor:pointer; display:flex; justify-content:space-between; align-items:center; }
+  .prog-card-badges { display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+  .prog-party-badge { border-radius:6px; padding:3px 10px; font-size:12px; font-weight:700; color:#fff; }
+  .prog-badge-gov { background:#e8f5e9; color:#2e7d32; border-radius:4px; padding:2px 8px; font-size:11px; font-weight:600; }
+  .prog-badge-comp { border-radius:4px; padding:2px 8px; font-size:11px; font-weight:600; }
+  .prog-chevron { font-size:13px; font-weight:600; }
+  .prog-card-body { display:none; border-top:1px solid var(--border); padding:16px; }
+  .prog-card.open .prog-card-body { display:block; }
+  .prog-section-title { font-size:10px; font-weight:700; letter-spacing:2px; text-transform:uppercase; margin-bottom:7px; }
+  .prog-summary { font-size:13.5px; color:var(--neutral-mid); line-height:1.7; margin-bottom:12px; }
+  .prog-promises { list-style:none; padding:0; margin-bottom:12px; }
+  .prog-promises li { font-size:13px; color:var(--neutral-mid); padding:4px 0 4px 18px; position:relative; border-bottom:1px solid var(--border); line-height:1.55; }
+  .prog-promises li:last-child { border-bottom:none; }
+  .prog-promises li::before { content:'→'; position:absolute; left:0; font-size:11px; top:5px; color:#aaa; }
+  .prog-link { display:inline-flex; align-items:center; gap:6px; border-radius:6px; padding:6px 12px; font-size:12px; font-weight:600; text-decoration:none; color:#fff; margin-bottom:12px; }
+  .compliance-block { border-top:1px solid var(--border); padding-top:12px; margin-top:4px; }
+  .compliance-items { list-style:none; padding:0; }
+  .compliance-items li { font-size:13px; color:var(--neutral-mid); padding:4px 0; border-bottom:1px solid #f5f5f5; }
+
+  /* ── GOVERNS (reused from original) ── */
+  .gov-card { background:var(--white); border-radius:12px; overflow:hidden; box-shadow:var(--shadow); margin-bottom:18px; }
+  .gov-card-head { padding:16px 22px; color:#fff; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; }
+  .gov-card-title { font-family:'Playfair Display',serif; font-size:20px; font-weight:900; }
+  .gov-card-period { font-size:12px; color:rgba(255,255,255,.65); margin-top:2px; }
+  .gov-card-tag { background:rgba(255,255,255,.2); border-radius:6px; padding:4px 12px; font-size:12px; font-weight:600; }
+  .gov-card-body { padding:16px 22px; }
+  .gov-coalition { font-size:13px; color:var(--neutral-mid); margin-bottom:14px; }
+  .gov-cols { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .gov-col-title { font-size:10px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:#aaa; margin-bottom:8px; }
+  .gov-list { list-style:none; padding:0; }
+  .gov-list li { font-size:12.5px; color:var(--neutral-mid); padding:4px 0 4px 14px; position:relative; border-bottom:1px solid #f5f5f5; line-height:1.5; }
+  .gov-list li::before { content:'›'; position:absolute; left:0; font-weight:700; }
+
+  /* ── FONTS ── */
+  .fonts-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:12px; }
+  .font-card { background:var(--white); border-radius:10px; padding:16px 18px; box-shadow:var(--shadow); }
+  .font-cat { font-size:10px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:#aaa; margin-bottom:8px; }
+  .font-list { list-style:none; padding:0; }
+  .font-list li { font-size:12.5px; color:var(--neutral-mid); padding:4px 0; border-bottom:1px solid var(--border); }
+  .font-list li:last-child { border-bottom:none; }
+  .methodology-box { background:var(--white); border-radius:10px; padding:18px 22px; margin-bottom:18px; border-left:4px solid var(--neutral-mid); font-size:13.5px; color:var(--neutral-mid); line-height:1.7; }
+
+  /* ── FOOTER ── */
+  footer { background:var(--neutral); color:rgba(255,255,255,.35); padding:24px 40px; text-align:center; font-size:12px; }
+  footer span { color:rgba(255,255,255,.15); margin:0 8px; }
+
+  /* ── RESPONSIVE ── */
+  @media(max-width:640px){
+    .protagonists,.positions-grid,.comparison-row,.compare-selectors,.compare-headers,.compare-cols,.gov-cols,.year-tabs{grid-template-columns:1fr;}
+    header{padding:32px 18px 28px;}
+    .sec-title-bar{padding:24px 18px 20px;}
+    .content-wrap{padding:24px 14px 60px;}
+    .tab-btn{padding:10px 10px;font-size:11px;}
+  }
+
+  /* ── SVG ICONS ── */
+  .icon-svg { width:18px; height:18px; display:inline-block; vertical-align:middle; fill:currentColor; }
+  .tab-btn .icon-svg { width:15px; height:15px; margin-right:4px; }
+
+  /* ── IMPROVED CARDS ── */
+  .pcard { transition: box-shadow 0.15s, border-color 0.15s; }
+  .pcard:hover { box-shadow: 0 6px 24px rgba(0,0,0,0.12); }
+
+  /* ── POBLES SECTION ── */
+  .search-bar { width:100%; padding:12px 16px; border-radius:10px; border:2px solid var(--border); font-size:14px; font-family:inherit; background:#fff; box-shadow:0 2px 8px rgba(0,0,0,0.04); outline:none; transition:border-color 0.15s; }
+  .search-bar:focus { border-color:var(--neutral-mid); }
+  .filter-pills { display:flex; flex-wrap:wrap; gap:7px; margin-top:12px; margin-bottom:20px; }
+  .filter-pill { padding:5px 12px; border-radius:20px; border:1.5px solid var(--border); background:#fff; color:#666; font-size:12px; font-weight:600; cursor:pointer; font-family:inherit; transition:all 0.12s; }
+  .filter-pill.active { background:var(--neutral); color:#fff; border-color:var(--neutral); }
+  .pobles-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(290px,1fr)); gap:14px; }
+  .poble-card { background:#fff; border-radius:12px; overflow:hidden; box-shadow:0 2px 10px rgba(0,0,0,0.06); border:2px solid transparent; transition:all 0.15s; cursor:pointer; }
+  .poble-card:hover { box-shadow:0 4px 18px rgba(0,0,0,0.1); }
+  .poble-card.open { border-color:var(--pcolor,#333); }
+  .poble-head { padding:12px 16px; display:flex; justify-content:space-between; align-items:center; }
+  .poble-nom { font-family:'Playfair Display',serif; font-size:16px; font-weight:900; color:#fff; }
+  .poble-illa { font-size:10px; font-weight:600; letter-spacing:1.5px; text-transform:uppercase; color:rgba(255,255,255,0.6); margin-top:1px; }
+  .poble-pop { font-size:11px; color:rgba(255,255,255,0.65); background:rgba(255,255,255,0.15); border-radius:12px; padding:2px 8px; white-space:nowrap; }
+  .poble-body { padding:12px 16px; }
+  .poble-alcalde { font-size:12px; color:var(--neutral-mid); margin-bottom:8px; }
+  .poble-regidors-bar { display:flex; height:8px; border-radius:4px; overflow:hidden; margin-bottom:8px; }
+  .poble-info { display:flex; justify-content:space-between; align-items:center; }
+  .poble-govern-badge { border-radius:4px; padding:2px 8px; font-size:11px; font-weight:700; color:#fff; }
+  .poble-toggle { font-size:11px; color:#aaa; }
+  .poble-detail { display:none; border-top:1px solid var(--border); padding:12px 16px; background:#fafafa; }
+  .poble-card.open .poble-detail { display:block; }
+  .regidor-row { display:flex; align-items:center; justify-content:space-between; padding:4px 0; border-bottom:1px solid var(--border); font-size:12.5px; color:var(--neutral-mid); }
+  .regidor-row:last-child { border-bottom:none; }
+  .regidor-dot { width:10px; height:10px; border-radius:2px; display:inline-block; margin-right:6px; flex-shrink:0; }
+  .regidor-count { font-weight:700; color:var(--neutral); }
+  .no-results { text-align:center; padding:40px; color:#aaa; font-size:15px; }
+
+  /* ── ELECT27 SECTION ── */
+  .elect27-scenario { background:#fff; border-radius:12px; padding:20px 22px; box-shadow:var(--shadow); margin-bottom:14px; border-left:4px solid var(--accent); }
+  .elect27-title { font-family:'Playfair Display',serif; font-size:18px; font-weight:700; color:var(--neutral); margin-bottom:8px; }
+  .elect27-sub { font-size:13px; color:var(--neutral-mid); line-height:1.65; }
+  .poll-bar { background:#f0f0f0; border-radius:6px; height:28px; overflow:hidden; margin:10px 0; display:flex; }
+  .poll-seg { height:100%; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff; transition:width 0.4s; }
+  .scenario-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; margin-top:14px; }
+  .scenario-box { border-radius:8px; padding:14px; text-align:center; }
+  .scenario-box-title { font-size:10px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; margin-bottom:6px; }
+  .scenario-box-pct { font-size:28px; font-weight:900; font-family:'Playfair Display',serif; }
+  .scenario-box-label { font-size:11px; margin-top:2px; }
+  .issues-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:10px; margin-top:14px; }
+  .issue-card { background:#fff; border-radius:10px; padding:14px 16px; box-shadow:0 1px 6px rgba(0,0,0,0.05); }
+  .issue-icon { font-size:22px; margin-bottom:6px; }
+  .issue-title { font-size:13px; font-weight:700; color:var(--neutral); margin-bottom:4px; }
+  .issue-text { font-size:12px; color:var(--neutral-mid); line-height:1.55; }
+  .prog27-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+  .prog27-card { background:#fff; border-radius:10px; overflow:hidden; box-shadow:var(--shadow); }
+  .prog27-head { padding:12px 16px; color:#fff; }
+  .prog27-party { font-size:10px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:rgba(255,255,255,0.65); }
+  .prog27-name { font-family:'Playfair Display',serif; font-size:16px; font-weight:900; }
+  .prog27-body { padding:12px 16px; }
+  .prog27-item { font-size:12.5px; color:var(--neutral-mid); padding:4px 0 4px 14px; position:relative; border-bottom:1px solid var(--border); line-height:1.5; }
+  .prog27-item:last-child { border-bottom:none; }
+  .prog27-arrow { position:absolute; left:0; font-size:10px; top:5px; }
+
+  @media(max-width:640px){
+    .scenario-grid { grid-template-columns:1fr; }
+    .prog27-grid { grid-template-columns:1fr; }
+    .pobles-grid { grid-template-columns:1fr; }
+  }
+
