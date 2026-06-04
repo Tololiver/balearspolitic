@@ -1,4 +1,4 @@
-// src/admin/AdminBlog.jsx — CMS complet per a posts
+// src/admin/AdminBlog.jsx
 import { useState, useEffect } from 'react'
 import { useAllPostsAdmin, useUpsertPost, useDeletePost, useCategories } from '@/hooks/useBlog'
 import { useForm } from 'react-hook-form'
@@ -90,27 +90,27 @@ function PostEditor({ postId, post, categories, onClose }) {
   const [aiLoading, setAiLoading] = useState(false)
   const [imageUploading, setImageUploading] = useState(false)
 
-  const { register, handleSubmit, watch, setValue, getValues, formState: { errors } } = useForm({
+  const { register, handleSubmit, watch, setValue, getValues } = useForm({
     defaultValues: {
-      id: post?.id || undefined,
-      titol: post?.titol || '',
-      slug: post?.slug || '',
-      resum: post?.resum || '',
-      contingut: post?.contingut || '',
-      categoria_id: post?.categoria_id || '',
-      autor: post?.autor || 'Tolo Oliver',
-      publicat: post?.publicat || false,
-      destacat: post?.destacat || false,
-      meta_title: post?.meta_title || '',
-      meta_desc: post?.meta_desc || '',
-      imatge_url: post?.imatge_url || '',
-      imatge_peu: post?.imatge_peu || '',
+      id:          post?.id || undefined,
+      titol:       post?.titol || '',
+      slug:        post?.slug || '',
+      resum:       post?.resum || '',
+      contingut:   post?.contingut || '',
+      categoria_id:post?.categoria_id || '',
+      autor:       post?.autor || 'Tolo Oliver',
+      publicat:    post?.publicat || false,
+      destacat:    post?.destacat || false,
+      meta_title:  post?.meta_title || '',
+      meta_desc:   post?.meta_desc || '',
+      imatge_url:  post?.imatge_url || '',
+      imatge_alt:  post?.imatge_alt || '',
+      imatge_peu:  post?.imatge_peu || '',
     }
   })
 
   const titol = watch('titol')
 
-  // Auto-slug des del títol
   useEffect(() => {
     if (!post && titol) {
       const slug = titol.toLowerCase()
@@ -123,7 +123,6 @@ function PostEditor({ postId, post, categories, onClose }) {
     }
   }, [titol, post, setValue])
 
-  // Upload imatge
   const handleImageUpload = async (e) => {
     const file = e.target.files?.[0]
     if (!file) return
@@ -137,13 +136,12 @@ function PostEditor({ postId, post, categories, onClose }) {
       setValue('imatge_url', publicUrl)
       toast.success('Imatge pujada!')
     } catch (err) {
-      toast.error('Error pujant la imatge: ' + err.message)
+      toast.error('Error: ' + err.message)
     } finally {
       setImageUploading(false)
     }
   }
 
-  // IA: millorar text
   const handleAI = async (action) => {
     const text = action === 'resum' ? getValues('resum') : getValues('contingut')
     if (!text) { toast.error('Escriu primer el contingut'); return }
@@ -207,66 +205,84 @@ function PostEditor({ postId, post, categories, onClose }) {
             <div>
               <label className="text-xs font-semibold text-mid block mb-1">Categoria</label>
               <select {...register('categoria_id')}
-                className="w-full text-sm border border-border rounded-lg px-3 py-2 focus:outline-none focus:border-mid bg-white">
+                className="w-full text-sm border border-border rounded-lg px-3 py-2 focus:outline-none bg-white">
                 <option value="">Sense categoria</option>
                 {categories.map(c => <option key={c.id} value={c.id}>{c.nom}</option>)}
               </select>
             </div>
             <div>
               <label className="text-xs font-semibold text-mid block mb-1">Autor</label>
-              <input {...register('autor')} className="w-full text-sm border border-border rounded-lg px-3 py-2 focus:outline-none focus:border-mid" />
+              <input {...register('autor')} className="w-full text-sm border border-border rounded-lg px-3 py-2 focus:outline-none" />
             </div>
           </div>
 
-          {/* Resum + IA */}
+          {/* Resum */}
           <div>
             <div className="flex items-center justify-between mb-1">
               <label className="text-xs font-semibold text-mid">Resum</label>
               <button type="button" onClick={() => handleAI('resum')} disabled={aiLoading}
-                className="text-[10px] font-mono font-bold text-accent hover:underline disabled:opacity-50 flex items-center gap-1">
+                className="text-[10px] font-mono font-bold text-accent hover:underline disabled:opacity-50">
                 {aiLoading ? '...' : '✨ Generar amb IA'}
               </button>
             </div>
             <textarea {...register('resum')} rows={3}
-              placeholder="Resum breu de l'article (apareix a les llistes)..."
-              className="w-full text-sm border border-border rounded-lg px-3 py-2 focus:outline-none focus:border-mid resize-none" />
+              placeholder="Resum breu de l'article..."
+              className="w-full text-sm border border-border rounded-lg px-3 py-2 focus:outline-none resize-none" />
           </div>
 
-          {/* Contingut + IA */}
+          {/* Contingut */}
           <div>
             <div className="flex items-center justify-between mb-1">
               <label className="text-xs font-semibold text-mid">Contingut (HTML)</label>
               <button type="button" onClick={() => handleAI('millorar')} disabled={aiLoading}
-                className="text-[10px] font-mono font-bold text-accent hover:underline disabled:opacity-50 flex items-center gap-1">
+                className="text-[10px] font-mono font-bold text-accent hover:underline disabled:opacity-50">
                 {aiLoading ? '...' : '✨ Millorar amb IA'}
               </button>
             </div>
             <textarea {...register('contingut')} rows={12}
               placeholder="<h2>Títol</h2><p>Contingut en HTML...</p>"
-              className="w-full text-xs font-mono border border-border rounded-lg px-3 py-2 focus:outline-none focus:border-mid resize-y" />
-            <div className="text-[10px] text-mid mt-1">Suporta HTML: &lt;h2&gt;, &lt;p&gt;, &lt;strong&gt;, &lt;ul&gt;, &lt;blockquote&gt;...</div>
+              className="w-full text-xs font-mono border border-border rounded-lg px-3 py-2 focus:outline-none resize-y" />
+            <div className="text-[10px] text-mid mt-1">Suporta: &lt;h2&gt;, &lt;p&gt;, &lt;strong&gt;, &lt;ul&gt;, &lt;blockquote&gt;...</div>
           </div>
 
           {/* Imatge */}
-          <div>
-            <label className="text-xs font-semibold text-mid block mb-1">Imatge destacada</label>
+          <div className="space-y-3 bg-paper rounded-lg p-4 border border-border">
+            <div className="font-mono text-[10px] tracking-[2px] uppercase text-mid font-bold">Imatge destacada</div>
+
             <div className="flex gap-3 items-start">
               <div className="flex-1">
-                <input {...register('imatge_url')} placeholder="URL de la imatge o puja una..."
-                  className="w-full text-sm border border-border rounded-lg px-3 py-2 focus:outline-none focus:border-mid mb-2" />
-                <label className={`inline-flex items-center gap-2 text-xs font-semibold px-3 py-1.5 rounded-lg border border-border cursor-pointer hover:bg-paper ${imageUploading ? 'opacity-50' : ''}`}>
-                  <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                <input {...register('imatge_url')} placeholder="URL de la imatge..."
+                  className="w-full text-sm border border-border rounded-lg px-3 py-2 focus:outline-none bg-white mb-2" />
+                <label className={`inline-flex items-center gap-2 text-xs font-semibold px-3 py-1.5 rounded-lg border border-border cursor-pointer hover:bg-white ${imageUploading ? 'opacity-50' : ''}`}>
+                  <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/>
+                  </svg>
                   {imageUploading ? 'Pujant...' : 'Pujar imatge'}
                   <input type="file" accept="image/*" className="hidden" onChange={handleImageUpload} disabled={imageUploading} />
                 </label>
               </div>
               {watch('imatge_url') && (
-                <img src={watch('imatge_url')} alt="" className="w-20 h-20 object-cover rounded-lg border border-border" />
+                <img src={watch('imatge_url')} alt="" className="w-20 h-20 object-cover rounded-lg border border-border flex-shrink-0" />
               )}
+            </div>
+
+            {/* ── Peu de foto ── */}
+            <div>
+              <label className="text-xs font-semibold text-mid block mb-1">
+                Peu de foto / Autor de la imatge
+                <span className="font-normal text-mid/60 ml-1.5">(opcional)</span>
+              </label>
+              <input
+                {...register('imatge_peu')}
+                placeholder="Ex: Fotografia de Joan Miró · Europa Press"
+                className="w-full text-sm border border-border rounded-lg px-3 py-2 focus:outline-none focus:border-mid bg-white"
+              />
+              <div className="text-[10px] text-mid mt-1">Apareix en tipografia petita sota la imatge, únicament si té contingut.</div>
             </div>
           </div>
 
-          {/* SEO + IA */}
+          {/* SEO */}
           <div className="bg-paper rounded-lg p-4 border border-border">
             <div className="flex items-center justify-between mb-3">
               <div className="font-mono text-[10px] tracking-[2px] uppercase text-mid font-bold">SEO</div>
@@ -279,12 +295,12 @@ function PostEditor({ postId, post, categories, onClose }) {
               <div>
                 <label className="text-xs font-semibold text-mid block mb-1">Meta title</label>
                 <input {...register('meta_title')} placeholder="Títol per a Google (60 caràcters màx.)"
-                  className="w-full text-sm border border-border rounded-lg px-3 py-2 focus:outline-none focus:border-mid bg-white" />
+                  className="w-full text-sm border border-border rounded-lg px-3 py-2 focus:outline-none bg-white" />
               </div>
               <div>
                 <label className="text-xs font-semibold text-mid block mb-1">Meta description</label>
                 <textarea {...register('meta_desc')} rows={2} placeholder="Descripció per a Google (160 caràcters màx.)"
-                  className="w-full text-sm border border-border rounded-lg px-3 py-2 focus:outline-none focus:border-mid resize-none bg-white" />
+                  className="w-full text-sm border border-border rounded-lg px-3 py-2 focus:outline-none resize-none bg-white" />
               </div>
             </div>
           </div>
@@ -299,7 +315,7 @@ function PostEditor({ postId, post, categories, onClose }) {
             <label className="flex items-center gap-2 text-sm cursor-pointer">
               <input type="checkbox" {...register('destacat')} className="rounded" />
               <span className="font-semibold">Destacat</span>
-              <span className="text-xs text-mid">(apareix al widget de la home)</span>
+              <span className="text-xs text-mid">(apareix a la home)</span>
             </label>
           </div>
 
