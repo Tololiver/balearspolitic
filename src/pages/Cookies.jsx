@@ -63,7 +63,7 @@ export default function Cookies() {
         </Section>
 
         <Section title="Contacte">
-          <p>Per a qualsevol dubte sobre cookies o privacitat: <a href="mailto:hola@balearspolitic.cat" className="text-accent hover:underline">hola@balearspolitic.cat</a></p>
+          <p>Per a qualsevol dubte sobre cookies o privacitat: <a href="mailto:boocman@gmail.com" className="text-accent hover:underline">hola@balearspolitic.cat</a></p>
         </Section>
       </div>
 
