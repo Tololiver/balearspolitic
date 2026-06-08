@@ -59,9 +59,10 @@ export default function Comparador() {
               {[p1, p2].map(p => (
                 <div key={p.codi} className="rounded-card p-4 text-white" style={{ background: p.color }}>
                   {p.logo_url && (
-                    <img src={p.logo_url} alt={p.nom}
-                      className="h-8 object-contain mb-2"
-                      style={{ filter: 'brightness(0) invert(1)' }}/>
+                    <div className="inline-flex bg-white rounded-lg p-1.5 mb-2">
+                      <img src={p.logo_url} alt={p.nom}
+                        className="h-7 object-contain"/>
+                    </div>
                   )}
                   <div className="font-mono text-[9px] tracking-[2px] uppercase text-white/50 mb-1">{p.ideologia}</div>
                   <div className="font-display text-xl font-black">{p.nom}</div>

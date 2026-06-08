@@ -53,12 +53,10 @@ export default function PartyBadge({
       title={parti.nom || nom}
     >
       {logoUrl ? (
-        <img
-          src={logoUrl}
-          alt={nom}
-          className={`${s.logo} object-contain flex-shrink-0`}
-          style={{ filter: 'brightness(0) invert(1)' }} // blanc
-        />
+        <span className="bg-white rounded flex items-center justify-center flex-shrink-0 p-0.5"
+          style={{ width: size === 'xs' ? 16 : size === 'sm' ? 18 : 20, height: size === 'xs' ? 16 : size === 'sm' ? 18 : 20 }}>
+          <img src={logoUrl} alt={nom} className="w-full h-full object-contain" />
+        </span>
       ) : null}
       {showName && <span>{nom}</span>}
     </span>
