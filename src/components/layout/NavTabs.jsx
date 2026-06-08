@@ -7,7 +7,7 @@ const ICO = { size: 14, strokeWidth: 1.5 }
 const TABS = [
   { to:'/',               label:'Inici',          icon:<Home {...ICO}/>        , end:true },
   { to:'/pp-vs-psoe',    label:'PP vs PSOE',     icon:<Scale {...ICO}/>       },
-  { to:'/partits',       label:'Fitxes',          icon:<Users {...ICO}/>       },
+  { to:'/partits',       label:'Partits',          icon:<Users {...ICO}/>       },
   { to:'/comparador',    label:'Comparador',      icon:<ArrowLeftRight {...ICO}/> },
   { to:'/programes',     label:'Programes',       icon:<FileText {...ICO}/>    },
   { to:'/ajuntaments',   label:'Ajuntaments',     icon:<Building2 {...ICO}/>   },

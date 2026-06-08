@@ -146,14 +146,24 @@ function ProgramCard({ programa: p, isOpen, onToggle }) {
               </>
             )}
 
-            {p.link_programa && (
-              <a href={p.link_programa} target="_blank" rel="noreferrer"
-                 className="inline-flex items-center gap-2 text-xs font-semibold text-white px-3 py-1.5 rounded-lg mb-4"
-                 style={{ background: color }}>
-                <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
-                Programa complet
-              </a>
-            )}
+            <div className="flex flex-wrap gap-2 mb-4">
+              {p.pdf_url && (
+                <a href={p.pdf_url} target="_blank" rel="noreferrer"
+                   className="inline-flex items-center gap-2 text-xs font-semibold text-white px-3 py-1.5 rounded-lg"
+                   style={{ background: color }}>
+                  <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                  Descarregar PDF
+                </a>
+              )}
+              {p.link_programa && (
+                <a href={p.link_programa} target="_blank" rel="noreferrer"
+                   className="inline-flex items-center gap-2 text-xs font-semibold px-3 py-1.5 rounded-lg border"
+                   style={{ color, borderColor: color }}>
+                  <svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                  Programa complet (web)
+                </a>
+              )}
+            </div>
 
             {p.analisi && (
               <div className="border-t border-black/8 pt-4">
