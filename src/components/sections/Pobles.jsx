@@ -5,43 +5,50 @@ import { SectionTitleBar, ContentWrap, SeatsBar, LoadingSpinner, EmptyState, Sea
 import { clsx } from 'clsx'
 
 const ILLES = ['totes', 'Mallorca', 'Menorca', 'Eivissa', 'Formentera']
-const GOVERN_FILTERS = [
-  { val: 'totes', label: 'Tots' },
-  { val: 'PP',    label: 'PP governa',   color: '#0e2a6e' },
-  { val: 'PSIB',  label: 'PSIB governa', color: '#b82012' },
-  { val: 'Mes',   label: 'Més/Prog',     color: '#1a5c30' },
+
+const PARTITS_GOVERN = [
+  { val:'pp',     label:'PP',          color:'#0e2a6e' },
+  { val:'psib',   label:'PSIB',        color:'#b82012' },
+  { val:'mes',    label:'Més',         color:'#1a5c30' },
+  { val:'elpi',   label:'El Pi',       color:'#bf5c00' },
+  { val:'saunio', label:'Sa Unió',     color:'#4527a0' },
+  { val:'mxme',   label:'MxMe',        color:'#005448' },
+  { val:'podem',  label:'Podemos',     color:'#6b0f9e' },
+  { val:'vox',    label:'Vox',         color:'#4a6600' },
+  { val:'ind',    label:'Independents',color:'#888888' },
 ]
 
 export default function Pobles() {
   const [search,    setSearch]    = useState('')
   const [illa,      setIlla]      = useState('totes')
   const [governFil, setGovernFil] = useState('totes')
-  const [openId,    setOpenId]    = useState(null)  // un sol id obert alhora
+  const [openId,    setOpenId]    = useState(null)
 
-  const { data: pobles, isLoading } = usePobles({ illa, governParti: governFil, search })
+  const { data: poblesRaw, isLoading } = usePobles({ illa, governParti: governFil, search })
 
-  // Accordion: tanca l'anterior quan n'obres un de nou
+  // Ordre alfabètic sempre
+  const pobles = poblesRaw ? [...poblesRaw].sort((a, b) => a.nom.localeCompare(b.nom, 'ca')) : []
+
   const toggle = useCallback((id) => {
     setOpenId(prev => prev === id ? null : id)
   }, [])
 
   const setIllaFilter = (val) => { setIlla(val); setGovernFil('totes'); setOpenId(null) }
-  const setGovernFilter = (val) => { setGovernFil(val); setIlla('totes'); setOpenId(null) }
+  const setGovernFilter = (val) => { setGovernFil(val === governFil ? 'totes' : val); setIlla('totes'); setOpenId(null) }
 
   return (
     <>
       <SectionTitleBar
         eyebrow="Eleccions Municipals 28M 2023"
-        title="Composicio dels Ajuntaments"
-        sub="Alcalde/essa, composicio del consistori i distribucio de regidors per partit."
+        title="Ajuntaments"
+        sub="Alcalde/essa, composició del consistori i distribució de regidors per partit. Ordre alfabètic."
         gradient="from-ink to-[#0a1a2a]"
       />
       <ContentWrap>
-        {/* Search */}
         <div className="space-y-3 mb-5">
-          <SearchInput value={search} onChange={setSearch} placeholder="Cerca un municipi..." />
+          <SearchInput value={search} onChange={setSearch} placeholder="Cerca un ajuntament..." />
 
-          {/* Illa filters */}
+          {/* Filtres per illa */}
           <div className="flex flex-wrap gap-2">
             {ILLES.map(i => (
               <button key={i} onClick={() => setIllaFilter(i)}
@@ -49,11 +56,19 @@ export default function Pobles() {
                 {i === 'totes' ? 'Totes les Illes' : i}
               </button>
             ))}
-            <div className="w-px h-5 bg-border self-center mx-1" />
-            {GOVERN_FILTERS.slice(1).map(gf => (
+          </div>
+
+          {/* Filtres per qui governa */}
+          <div className="flex flex-wrap gap-2 items-center">
+            <span className="font-mono text-[10px] uppercase tracking-wider text-mid">Governa:</span>
+            <button onClick={() => setGovernFilter('totes')}
+              className={clsx('filter-pill', governFil === 'totes' ? 'active' : '')}>
+              Tots
+            </button>
+            {PARTITS_GOVERN.map(gf => (
               <button key={gf.val} onClick={() => setGovernFilter(gf.val)}
-                className={clsx('filter-pill', governFil === gf.val ? 'active' : '')}>
-                {gf.color && <span className="inline-block w-2 h-2 rounded-sm mr-1.5 align-middle" style={{ background: gf.color }} />}
+                className={clsx('filter-pill flex items-center gap-1.5', governFil === gf.val ? 'active' : '')}>
+                <span className="w-2 h-2 rounded-sm flex-shrink-0" style={{ background: gf.color }}/>
                 {gf.label}
               </button>
             ))}
