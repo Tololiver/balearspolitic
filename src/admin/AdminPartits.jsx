@@ -130,7 +130,7 @@ function PartitModal({ partit, onClose }) {
     setLogoUploading(true)
     try {
       const ext = file.name.split('.').pop()
-      const path = `${Date.now()}_${file.name.replace(/\s/g, '_')}`
+      const path = `${Date.now()}_${file.name.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-zA-Z0-9._-]/g, '_')}`
       const { error } = await supabase.storage.from('partits-logos').upload(path, file)
       if (error) throw error
       const { data: { publicUrl } } = supabase.storage.from('partits-logos').getPublicUrl(path)

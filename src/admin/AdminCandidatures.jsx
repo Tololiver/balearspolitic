@@ -235,7 +235,7 @@ function CandidaturaModal({ candidatura: c, onClose }) {
     if (!file) return
     setPdfUploading(true)
     try {
-      const path = `2027_${Date.now()}_${file.name.replace(/\s/g,'_')}`
+      const path = `2027_${Date.now()}_${file.name.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-zA-Z0-9._-]/g,'_')}`
       const { error } = await supabase.storage.from('programes-pdf').upload(path, file)
       if (error) throw error
       const { data: { publicUrl } } = supabase.storage.from('programes-pdf').getPublicUrl(path)
@@ -250,7 +250,7 @@ function CandidaturaModal({ candidatura: c, onClose }) {
     if (!file) return
     setFotoUploading(true)
     try {
-      const path = `${Date.now()}_${file.name.replace(/\s/g,'_')}`
+      const path = `${Date.now()}_${file.name.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-zA-Z0-9._-]/g,'_')}`
       const { error } = await supabase.storage.from('candidats-foto').upload(path, file)
       if (error) throw error
       const { data: { publicUrl } } = supabase.storage.from('candidats-foto').getPublicUrl(path)
