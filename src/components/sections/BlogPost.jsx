@@ -1,12 +1,13 @@
 // src/components/sections/BlogPost.jsx
 import { useParams, Link } from 'react-router-dom'
-import { usePost } from '@/hooks/useBlog'
+import { usePost, usePosts } from '@/hooks/useBlog'
 import { ContentWrap, LoadingSpinner } from '@/components/ui'
 import './BlogPost.css'
 
 export default function BlogPost() {
   const { slug } = useParams()
   const { data: post, isLoading } = usePost(slug)
+  const { data: related } = usePosts({ limit: 3 })
 
   if (isLoading) return <ContentWrap><LoadingSpinner /></ContentWrap>
   if (!post) return (
@@ -31,6 +32,7 @@ export default function BlogPost() {
         <div className="absolute inset-0 opacity-20"
           style={{ background: cat?.color ? `radial-gradient(circle at 70% 50%, ${cat.color} 0%, transparent 60%)` : undefined }} />
         <div className="relative z-10 max-w-3xl mx-auto px-6 py-12 md:py-16">
+          {/* Breadcrumb */}
           <div className="flex items-center gap-2 font-mono text-[10px] text-white/40 mb-6">
             <Link to="/" className="hover:text-white/70">Inici</Link>
             <span>›</span>
@@ -39,7 +41,9 @@ export default function BlogPost() {
           </div>
           {cat && (
             <span className="inline-block font-mono text-[9px] font-bold tracking-[1.5px] uppercase text-white px-2.5 py-1 rounded mb-4"
-              style={{ background: cat.color }}>{cat.nom}</span>
+              style={{ background: cat.color }}>
+              {cat.nom}
+            </span>
           )}
           <h1 className="font-display text-3xl md:text-5xl font-black leading-tight tracking-tight mb-4">
             {post.titol}
@@ -62,19 +66,11 @@ export default function BlogPost() {
         </div>
       </div>
 
-      {/* Imatge destacada + peu de foto */}
+      {/* Imatge destacada */}
       {post.imatge_url && (
-        <div className="max-w-3xl mx-auto px-6 pt-6">
-          <figure>
-            <img src={post.imatge_url} alt={post.imatge_alt || post.titol}
-              className="w-full rounded-card shadow-lg object-cover max-h-96" />
-            {/* Peu de foto — només si té contingut */}
-            {post.imatge_peu && (
-              <figcaption className="mt-2 font-mono text-[10px] text-mid text-right leading-relaxed">
-                {post.imatge_peu}
-              </figcaption>
-            )}
-          </figure>
+        <div className="max-w-3xl mx-auto px-6 -mt-6 mb-0 relative z-10">
+          <img src={post.imatge_url} alt={post.imatge_alt || post.titol}
+            className="w-full rounded-card shadow-lg object-cover max-h-96" />
         </div>
       )}
 
@@ -82,12 +78,14 @@ export default function BlogPost() {
       <div className="max-w-3xl mx-auto px-6 py-10">
         <div className="blog-content" dangerouslySetInnerHTML={{ __html: post.contingut || '' }} />
 
+        {/* Footer de l'article */}
         <div className="mt-12 pt-6 border-t border-border flex items-center justify-between flex-wrap gap-4">
           <div className="font-mono text-xs text-mid">
             Publicat per <strong className="text-ink">{post.autor}</strong>
             {date && <> · {date}</>}
           </div>
-          <Link to="/blog" className="flex items-center gap-2 text-xs font-semibold text-accent hover:underline">
+          <Link to="/blog"
+            className="flex items-center gap-2 text-xs font-semibold text-accent hover:underline">
             <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><polyline points="15 18 9 12 15 6"/></svg>
             Tornar al blog
           </Link>
