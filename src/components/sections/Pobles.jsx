@@ -8,11 +8,11 @@ const ILLES = ['totes', 'Mallorca', 'Menorca', 'Eivissa', 'Formentera']
 
 const PARTITS_GOVERN = [
   { val:'pp',     label:'PP',          color:'#0e2a6e' },
-  { val:'psib',   label:'PSIB',        color:'#b82012' },
+  { val:'psib',   label:'PSIB',        color:'#e30022' },
   { val:'mes',    label:'Més',         color:'#1a5c30' },
-  { val:'elpi',   label:'El Pi',       color:'#bf5c00' },
-  { val:'saunio', label:'Sa Unió',     color:'#4527a0' },
-  { val:'mxme',   label:'MxMe',        color:'#005448' },
+  { val:'elpi',   label:'El Pi',       color:'#00d5af' },
+  { val:'saunio', label:'Sa Unió',     color:'#009d99' },
+  { val:'mxme',   label:'MxMe',        color:'#005151' },
   { val:'podem',  label:'Podemos',     color:'#6b0f9e' },
   { val:'vox',    label:'Vox',         color:'#4a6600' },
   { val:'ind',    label:'Independents',color:'#888888' },

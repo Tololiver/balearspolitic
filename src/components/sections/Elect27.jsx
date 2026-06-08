@@ -5,9 +5,9 @@ import { useCandidatures, useSondejos } from '@/hooks/useCandidatures'
 
 // ── Dades parlament Govern IB ──────────────────────────────────
 const PARLAMENTS_GOVERN = [
-  { any:2023, total:59, partits:[{nom:'PP',n:25,c:'#0e2a6e'},{nom:'PSIB',n:18,c:'#b82012'},{nom:'Vox',n:8,c:'#4a6600'},{nom:'Més',n:4,c:'#1a5c30'},{nom:'MxMe',n:2,c:'#005448'},{nom:'Podem',n:1,c:'#6b0f9e'},{nom:'Sa Unió',n:1,c:'#4527a0'}]},
-  { any:2019, total:59, partits:[{nom:'PSIB',n:19,c:'#b82012'},{nom:'PP',n:17,c:'#0e2a6e'},{nom:'Podem',n:7,c:'#6b0f9e'},{nom:'Més',n:5,c:'#1a5c30'},{nom:'Vox',n:3,c:'#4a6600'},{nom:'El Pi',n:3,c:'#bf5c00'},{nom:'MxMe',n:2,c:'#005448'},{nom:'Cs',n:3,c:'#e8a000'}]},
-  { any:2015, total:59, partits:[{nom:'PP',n:20,c:'#0e2a6e'},{nom:'PSIB',n:14,c:'#b82012'},{nom:'Podem',n:10,c:'#6b0f9e'},{nom:'Més',n:6,c:'#1a5c30'},{nom:'El Pi',n:3,c:'#bf5c00'},{nom:'MxMe',n:3,c:'#005448'},{nom:'Cs',n:2,c:'#e8a000'},{nom:'Altres',n:1,c:'#aaa'}]},
+  { any:2023, total:59, partits:[{nom:'PP',n:25,c:'#0e2a6e'},{nom:'PSIB',n:18,c:'#e30022'},{nom:'Vox',n:8,c:'#4a6600'},{nom:'Més',n:4,c:'#1a5c30'},{nom:'MxMe',n:2,c:'#005151'},{nom:'Podem',n:1,c:'#6b0f9e'},{nom:'Sa Unió',n:1,c:'#009d99'}]},
+  { any:2019, total:59, partits:[{nom:'PSIB',n:19,c:'#e30022'},{nom:'PP',n:17,c:'#0e2a6e'},{nom:'Podem',n:7,c:'#6b0f9e'},{nom:'Més',n:5,c:'#1a5c30'},{nom:'Vox',n:3,c:'#4a6600'},{nom:'El Pi',n:3,c:'#00d5af'},{nom:'MxMe',n:2,c:'#005151'},{nom:'Cs',n:3,c:'#e8a000'}]},
+  { any:2015, total:59, partits:[{nom:'PP',n:20,c:'#0e2a6e'},{nom:'PSIB',n:14,c:'#e30022'},{nom:'Podem',n:10,c:'#6b0f9e'},{nom:'Més',n:6,c:'#1a5c30'},{nom:'El Pi',n:3,c:'#00d5af'},{nom:'MxMe',n:3,c:'#005151'},{nom:'Cs',n:2,c:'#e8a000'},{nom:'Altres',n:1,c:'#aaa'}]},
 ]
 
 // ── Dades Consells Insulars (estoy suponiendo alguns escons 2015/2019) ──
@@ -16,36 +16,36 @@ const CONSELLS = {
     total: 51,
     note: 'Consell Insular de Mallorca · 51 consellers',
     anys: [
-      { any:2023, partits:[{nom:'PP',n:21,c:'#0e2a6e'},{nom:'PSIB',n:13,c:'#b82012'},{nom:'Vox',n:7,c:'#4a6600'},{nom:'Més',n:5,c:'#1a5c30'},{nom:'El Pi',n:3,c:'#bf5c00'},{nom:'MxMe',n:2,c:'#005448'}] },
-      { any:2019, partits:[{nom:'PSIB',n:16,c:'#b82012'},{nom:'PP',n:14,c:'#0e2a6e'},{nom:'Podem',n:6,c:'#6b0f9e'},{nom:'Més',n:6,c:'#1a5c30'},{nom:'El Pi',n:5,c:'#bf5c00'},{nom:'Vox',n:2,c:'#4a6600'},{nom:'MxMe',n:2,c:'#005448'}] },
-      { any:2015, partits:[{nom:'PP',n:16,c:'#0e2a6e'},{nom:'PSIB',n:12,c:'#b82012'},{nom:'Podem',n:8,c:'#6b0f9e'},{nom:'Més',n:7,c:'#1a5c30'},{nom:'El Pi',n:5,c:'#bf5c00'},{nom:'MxMe',n:3,c:'#005448'}] },
+      { any:2023, partits:[{nom:'PP',n:21,c:'#0e2a6e'},{nom:'PSIB',n:13,c:'#e30022'},{nom:'Vox',n:7,c:'#4a6600'},{nom:'Més',n:5,c:'#1a5c30'},{nom:'El Pi',n:3,c:'#00d5af'},{nom:'MxMe',n:2,c:'#005151'}] },
+      { any:2019, partits:[{nom:'PSIB',n:16,c:'#e30022'},{nom:'PP',n:14,c:'#0e2a6e'},{nom:'Podem',n:6,c:'#6b0f9e'},{nom:'Més',n:6,c:'#1a5c30'},{nom:'El Pi',n:5,c:'#00d5af'},{nom:'Vox',n:2,c:'#4a6600'},{nom:'MxMe',n:2,c:'#005151'}] },
+      { any:2015, partits:[{nom:'PP',n:16,c:'#0e2a6e'},{nom:'PSIB',n:12,c:'#e30022'},{nom:'Podem',n:8,c:'#6b0f9e'},{nom:'Més',n:7,c:'#1a5c30'},{nom:'El Pi',n:5,c:'#00d5af'},{nom:'MxMe',n:3,c:'#005151'}] },
     ]
   },
   Menorca: {
     total: 21,
     note: 'Consell Insular de Menorca · 21 consellers',
     anys: [
-      { any:2023, partits:[{nom:'PP',n:8,c:'#0e2a6e'},{nom:'PSIB',n:7,c:'#b82012'},{nom:'MxMe',n:4,c:'#005448'},{nom:'Vox',n:2,c:'#4a6600'}] },
-      { any:2019, partits:[{nom:'PSIB',n:8,c:'#b82012'},{nom:'PP',n:6,c:'#0e2a6e'},{nom:'MxMe',n:5,c:'#005448'},{nom:'Podem',n:2,c:'#6b0f9e'}] },
-      { any:2015, partits:[{nom:'PP',n:8,c:'#0e2a6e'},{nom:'PSIB',n:7,c:'#b82012'},{nom:'MxMe',n:4,c:'#005448'},{nom:'Podem',n:2,c:'#6b0f9e'}] },
+      { any:2023, partits:[{nom:'PP',n:8,c:'#0e2a6e'},{nom:'PSIB',n:7,c:'#e30022'},{nom:'MxMe',n:4,c:'#005151'},{nom:'Vox',n:2,c:'#4a6600'}] },
+      { any:2019, partits:[{nom:'PSIB',n:8,c:'#e30022'},{nom:'PP',n:6,c:'#0e2a6e'},{nom:'MxMe',n:5,c:'#005151'},{nom:'Podem',n:2,c:'#6b0f9e'}] },
+      { any:2015, partits:[{nom:'PP',n:8,c:'#0e2a6e'},{nom:'PSIB',n:7,c:'#e30022'},{nom:'MxMe',n:4,c:'#005151'},{nom:'Podem',n:2,c:'#6b0f9e'}] },
     ]
   },
   Eivissa: {
     total: 30,
     note: 'Consell Insular d\'Eivissa · 30 consellers',
     anys: [
-      { any:2023, partits:[{nom:'PP',n:13,c:'#0e2a6e'},{nom:'PSIB',n:9,c:'#b82012'},{nom:'Vox',n:5,c:'#4a6600'},{nom:'Podem',n:3,c:'#6b0f9e'}] },
-      { any:2019, partits:[{nom:'PSIB',n:11,c:'#b82012'},{nom:'PP',n:10,c:'#0e2a6e'},{nom:'Podem',n:5,c:'#6b0f9e'},{nom:'Vox',n:2,c:'#4a6600'},{nom:'Cs',n:2,c:'#e8a000'}] },
-      { any:2015, partits:[{nom:'PP',n:12,c:'#0e2a6e'},{nom:'PSIB',n:9,c:'#b82012'},{nom:'Podem',n:6,c:'#6b0f9e'},{nom:'Cs',n:2,c:'#e8a000'},{nom:'Altres',n:1,c:'#aaa'}] },
+      { any:2023, partits:[{nom:'PP',n:13,c:'#0e2a6e'},{nom:'PSIB',n:9,c:'#e30022'},{nom:'Vox',n:5,c:'#4a6600'},{nom:'Podem',n:3,c:'#6b0f9e'}] },
+      { any:2019, partits:[{nom:'PSIB',n:11,c:'#e30022'},{nom:'PP',n:10,c:'#0e2a6e'},{nom:'Podem',n:5,c:'#6b0f9e'},{nom:'Vox',n:2,c:'#4a6600'},{nom:'Cs',n:2,c:'#e8a000'}] },
+      { any:2015, partits:[{nom:'PP',n:12,c:'#0e2a6e'},{nom:'PSIB',n:9,c:'#e30022'},{nom:'Podem',n:6,c:'#6b0f9e'},{nom:'Cs',n:2,c:'#e8a000'},{nom:'Altres',n:1,c:'#aaa'}] },
     ]
   },
   Formentera: {
     total: 13,
     note: 'Consell Insular de Formentera · 13 consellers',
     anys: [
-      { any:2023, partits:[{nom:'Sa Unió',n:6,c:'#4527a0'},{nom:'PP',n:4,c:'#0e2a6e'},{nom:'PSIB',n:3,c:'#b82012'}] },
-      { any:2019, partits:[{nom:'PSIB-GxF',n:6,c:'#b82012'},{nom:'PP',n:4,c:'#0e2a6e'},{nom:'Podem',n:2,c:'#6b0f9e'},{nom:'Sa Unió',n:1,c:'#4527a0'}] },
-      { any:2015, partits:[{nom:'PSIB-GxF',n:7,c:'#b82012'},{nom:'PP',n:4,c:'#0e2a6e'},{nom:'Podem',n:2,c:'#6b0f9e'}] },
+      { any:2023, partits:[{nom:'Sa Unió',n:6,c:'#009d99'},{nom:'PP',n:4,c:'#0e2a6e'},{nom:'PSIB',n:3,c:'#e30022'}] },
+      { any:2019, partits:[{nom:'PSIB-GxF',n:6,c:'#e30022'},{nom:'PP',n:4,c:'#0e2a6e'},{nom:'Podem',n:2,c:'#6b0f9e'},{nom:'Sa Unió',n:1,c:'#009d99'}] },
+      { any:2015, partits:[{nom:'PSIB-GxF',n:7,c:'#e30022'},{nom:'PP',n:4,c:'#0e2a6e'},{nom:'Podem',n:2,c:'#6b0f9e'}] },
     ]
   },
 }
@@ -53,12 +53,12 @@ const CONSELLS = {
 const ILLES_CONSELLS = ['totes','Mallorca','Menorca','Eivissa','Formentera']
 
 const ISSUES = [
-  {icon:'home',title:'Habitatge',color:'#b82012',text:'El tema número 1. Baleares és la CCAA amb els preus de lloguer més alts.'},
+  {icon:'home',title:'Habitatge',color:'#e30022',text:'El tema número 1. Baleares és la CCAA amb els preus de lloguer més alts.'},
   {icon:'beach',title:'Turisme',color:'#1a5c30',text:'Contenció vs. creixement. L\'ecotasa i el lloguer vacacional seran eixos centrals.'},
   {icon:'chat',title:'Llengua',color:'#0e2a6e',text:'El pacte PP-Vox ha radicalitzat el debat lingüístic.'},
   {icon:'globe',title:'Immigració',color:'#4a6600',text:'Vox intentarà convertir-lo en el tema central de la campanya.'},
   {icon:'money',title:'Cost de Vida',color:'#6b0f9e',text:'Poder adquisitiu i salaris de temporada. Mobilitzadora per a l\'electorat jove.'},
-  {icon:'leaf',title:'Medi Ambient',color:'#005448',text:'Canvi climàtic, sequeres i pressions sobre recursos hídrics.'},
+  {icon:'leaf',title:'Medi Ambient',color:'#005151',text:'Canvi climàtic, sequeres i pressions sobre recursos hídrics.'},
 ]
 
 const ICONS = {
@@ -71,9 +71,9 @@ const ICONS = {
 }
 
 const PARTITS_CALC = [
-  {nom:'PP',color:'#0e2a6e'},{nom:'PSIB',color:'#b82012'},{nom:'Vox',color:'#4a6600'},
-  {nom:'Més',color:'#1a5c30'},{nom:'MxMe',color:'#005448'},{nom:'Podem',color:'#6b0f9e'},
-  {nom:'Sa Unió',color:'#4527a0'},{nom:'El Pi',color:'#bf5c00'},{nom:'Altres',color:'#999'},
+  {nom:'PP',color:'#0e2a6e'},{nom:'PSIB',color:'#e30022'},{nom:'Vox',color:'#4a6600'},
+  {nom:'Més',color:'#1a5c30'},{nom:'MxMe',color:'#005151'},{nom:'Podem',color:'#6b0f9e'},
+  {nom:'Sa Unió',color:'#009d99'},{nom:'El Pi',color:'#00d5af'},{nom:'Altres',color:'#999'},
 ]
 
 // ── Barra de parlament ─────────────────────────────────────────
@@ -188,7 +188,7 @@ function Calculator() {
           {[
             {label:'PP sol',n:seats.PP||0,color:'#0e2a6e'},
             {label:'PP+Vox+Sa Unió',n:govPP,color:'#0e2a6e'},
-            {label:'PSIB+Més+Podem+MxMe',n:govESQ,color:'#b82012'},
+            {label:'PSIB+Més+Podem+MxMe',n:govESQ,color:'#e30022'},
           ].map(({label,n,color})=>(
             <div key={label} className="rounded-lg p-3 border-2"
               style={{borderColor:n>=majoria?color:'#e5e0d8',background:n>=majoria?`${color}10`:'#fafaf8'}}>

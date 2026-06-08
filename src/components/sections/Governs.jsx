@@ -15,9 +15,9 @@ const PARLAMENTS = {
   7:  { total:59, note:'VI Legislatura · 59 escons', partits:[{nom:'PP',n:29,c:'#1565c0'},{nom:'PSIB',n:16,c:'#c0392b'},{nom:'UM',n:9,c:'#e67e22'},{nom:'PSM',n:5,c:'#27ae60'}] },
   8:  { total:59, note:'VII Legislatura · 59 escons', partits:[{nom:'PP',n:21,c:'#1565c0'},{nom:'PSIB',n:20,c:'#c0392b'},{nom:'Bloc',n:7,c:'#27ae60'},{nom:'UM',n:5,c:'#e67e22'},{nom:'Cs',n:3,c:'#f39c12'},{nom:'Altres',n:3,c:'#aaa'}] },
   9:  { total:59, note:'VIII Legislatura · 59 escons', partits:[{nom:'PP',n:35,c:'#0d47a1'},{nom:'PSIB',n:14,c:'#c0392b'},{nom:'Podem',n:6,c:'#8e44ad'},{nom:'Més',n:4,c:'#27ae60'}] },
-  10: { total:59, note:'IX Legislatura · 59 escons', partits:[{nom:'PP',n:20,c:'#1565c0'},{nom:'PSIB',n:14,c:'#c0392b'},{nom:'Podem',n:10,c:'#8e44ad'},{nom:'Més',n:6,c:'#27ae60'},{nom:'El Pi',n:3,c:'#bf5c00'},{nom:'MxMe',n:3,c:'#005448'},{nom:'Cs',n:2,c:'#f39c12'},{nom:'Altres',n:1,c:'#aaa'}] },
-  11: { total:59, note:'X Legislatura · 59 escons', partits:[{nom:'PSIB',n:19,c:'#c0392b'},{nom:'PP',n:17,c:'#1565c0'},{nom:'Podem',n:7,c:'#8e44ad'},{nom:'Més',n:5,c:'#27ae60'},{nom:'Vox',n:3,c:'#4a6600'},{nom:'El Pi',n:3,c:'#bf5c00'},{nom:'MxMe',n:2,c:'#005448'},{nom:'Cs',n:3,c:'#f39c12'}] },
-  12: { total:59, note:'XI Legislatura · 59 escons', partits:[{nom:'PP',n:25,c:'#0e2a6e'},{nom:'PSIB',n:18,c:'#b82012'},{nom:'Vox',n:8,c:'#4a6600'},{nom:'Més',n:4,c:'#1a5c30'},{nom:'MxMe',n:2,c:'#005448'},{nom:'Podem',n:1,c:'#6b0f9e'},{nom:'Sa Unió',n:1,c:'#4527a0'}] },
+  10: { total:59, note:'IX Legislatura · 59 escons', partits:[{nom:'PP',n:20,c:'#1565c0'},{nom:'PSIB',n:14,c:'#c0392b'},{nom:'Podem',n:10,c:'#8e44ad'},{nom:'Més',n:6,c:'#27ae60'},{nom:'El Pi',n:3,c:'#00d5af'},{nom:'MxMe',n:3,c:'#005151'},{nom:'Cs',n:2,c:'#f39c12'},{nom:'Altres',n:1,c:'#aaa'}] },
+  11: { total:59, note:'X Legislatura · 59 escons', partits:[{nom:'PSIB',n:19,c:'#c0392b'},{nom:'PP',n:17,c:'#1565c0'},{nom:'Podem',n:7,c:'#8e44ad'},{nom:'Més',n:5,c:'#27ae60'},{nom:'Vox',n:3,c:'#4a6600'},{nom:'El Pi',n:3,c:'#00d5af'},{nom:'MxMe',n:2,c:'#005151'},{nom:'Cs',n:3,c:'#f39c12'}] },
+  12: { total:59, note:'XI Legislatura · 59 escons', partits:[{nom:'PP',n:25,c:'#0e2a6e'},{nom:'PSIB',n:18,c:'#e30022'},{nom:'Vox',n:8,c:'#4a6600'},{nom:'Més',n:4,c:'#1a5c30'},{nom:'MxMe',n:2,c:'#005151'},{nom:'Podem',n:1,c:'#6b0f9e'},{nom:'Sa Unió',n:1,c:'#009d99'}] },
 }
 
 // Partits de coalició per govern (badges de color)
@@ -31,7 +31,7 @@ const COALICIONS = {
   7:  [{nom:'PP',c:'#1565c0'},{nom:'UM',c:'#e67e22'}],
   8:  [{nom:'PSIB',c:'#c0392b'},{nom:'Bloc',c:'#27ae60'},{nom:'UM',c:'#e67e22'}],
   9:  [{nom:'PP',c:'#0d47a1'}],
-  10: [{nom:'PSIB',c:'#c0392b'},{nom:'Més',c:'#27ae60'},{nom:'MxMe',c:'#005448'}],
+  10: [{nom:'PSIB',c:'#c0392b'},{nom:'Més',c:'#27ae60'},{nom:'MxMe',c:'#005151'}],
   11: [{nom:'PSIB',c:'#c0392b'},{nom:'Podem',c:'#8e44ad'},{nom:'Més',c:'#27ae60'}],
   12: [{nom:'PP',c:'#0e2a6e'}],
 }
@@ -80,7 +80,7 @@ export default function Governs() {
                 <span className="w-3 h-3 rounded-sm" style={{ background:'#0e2a6e' }} />PP / AP
               </span>
               <span className="flex items-center gap-1.5 font-mono text-[10px] text-white/45">
-                <span className="w-3 h-3 rounded-sm" style={{ background:'#b82012' }} />PSIB–PSOE
+                <span className="w-3 h-3 rounded-sm" style={{ background:'#e30022' }} />PSIB–PSOE
               </span>
               <span className="flex items-center gap-1.5 font-mono text-[10px] text-white/45">
                 <span className="w-3 h-3 rounded-sm" style={{ background:'#37474f' }} />Transició
