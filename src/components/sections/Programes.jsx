@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import { useProgrames, useEleccionsResultats } from '@/hooks/useData'
 import { SectionTitleBar, ContentWrap, LoadingSpinner, SeatsBar, ComplianceBadge } from '@/components/ui'
+import PartyBadge from '@/components/ui/PartyBadge'
 
 const ANYS = [2023, 2019, 2015]
 
@@ -109,9 +110,7 @@ function ProgramCard({ programa: p, isOpen, onToggle }) {
     >
       <button onClick={onToggle} className="w-full flex items-center justify-between p-4 text-left hover:bg-paper transition-colors">
         <div className="flex items-center gap-3 flex-wrap">
-          <span className="font-mono text-[10px] font-bold text-white px-2.5 py-1 rounded" style={{ background: color }}>
-            {nom}
-          </span>
+          <PartyBadge codi={p.parti_codi} size="sm" />
           {p.va_governar && (
             <span className="font-mono text-[10px] font-bold bg-mes-bg text-mes px-2 py-0.5 rounded">
               Va governar

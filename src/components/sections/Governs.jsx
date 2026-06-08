@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import { useGoverns } from '@/hooks/useData'
 import { SectionTitleBar, ContentWrap, LoadingSpinner } from '@/components/ui'
+import PartyBadge from '@/components/ui/PartyBadge'
 
 // Composicions parlamentàries per legislatura (keyed per ordre del govern)
 // Estoy suponiendo alguns escons de les legislatures 1983-2011 — verifícalos
@@ -134,10 +135,7 @@ function GovernCard({ govern: g, parlament, coalicio, isOpen, onToggle }) {
           </div>
         </div>
         <div className="flex items-center gap-2 flex-shrink-0 ml-2">
-          <span className="font-mono text-[10px] text-white px-2 py-0.5 rounded hidden sm:block"
-            style={{ background: g.color }}>
-            {g.parti_label || ''}
-          </span>
+          <PartyBadge codi={g.parti_codi} size="xs" className="hidden sm:flex" />
           <svg className={`w-4 h-4 text-mid transition-transform ${isOpen ? 'rotate-180' : ''}`}
             viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
             <polyline points="6 9 12 15 18 9"/>

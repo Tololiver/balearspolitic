@@ -2,6 +2,7 @@
 import { useState, useCallback } from 'react'
 import { usePobles } from '@/hooks/useData'
 import { SectionTitleBar, ContentWrap, SeatsBar, LoadingSpinner, EmptyState, SearchInput } from '@/components/ui'
+import PartyBadge from '@/components/ui/PartyBadge'
 import { clsx } from 'clsx'
 
 const ILLES = ['totes', 'Mallorca', 'Menorca', 'Eivissa', 'Formentera']
@@ -134,9 +135,7 @@ function PoblaCard({ poble: p, isOpen, onToggle }) {
         </div>
         <SeatsBar regidors={regidors} total={total} height="h-1.5" className="mb-2" />
         <div className="flex justify-between items-center">
-          <span className="font-mono text-[10px] font-bold text-white rounded px-2 py-0.5" style={{ background: p.color_govern }}>
-            {p.govern_parti} governa
-          </span>
+          <PartyBadge codi={p.govern_parti} size="xs" />
           <span className="text-[10px] text-mid flex items-center gap-1">
             {isOpen ? (
               <><svg className="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="18 15 12 9 6 15"/></svg> tancar</>

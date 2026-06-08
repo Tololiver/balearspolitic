@@ -1,7 +1,9 @@
 // src/components/sections/Elect27.jsx
+// src/components/sections/Elect27.jsx
 import { useState } from 'react'
 import { SectionTitleBar, ContentWrap, LoadingSpinner } from '@/components/ui'
 import { useCandidatures, useSondejos } from '@/hooks/useCandidatures'
+import PartyBadge from '@/components/ui/PartyBadge'
 
 // ── Dades parlament Govern IB ──────────────────────────────────
 const PARLAMENTS_GOVERN = [
@@ -302,9 +304,7 @@ function CandidaturesSection({ ambit, illaFilter }) {
                     )}
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 flex-wrap">
-                        <span className="font-mono text-[9px] font-bold text-white px-1.5 py-0.5 rounded" style={{background:color}}>
-                          {c.partits?.nom||c.parti_codi}
-                        </span>
+                        <PartyBadge codi={c.parti_codi} size="xs" />
                         {c.cap_llista && <span className="font-semibold text-sm text-ink">{c.cap_llista}</span>}
                       </div>
                       {c.bio && <div className="text-xs text-mid mt-0.5 truncate">{c.bio}</div>}
