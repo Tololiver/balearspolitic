@@ -96,6 +96,7 @@ function PartitModal({ partit, onClose }) {
     defaultValues: {
       id:           partit?.id,
       nom:          partit?.nom || '',
+      codi:         partit?.codi || '',
       sigles:       partit?.sigles || '',
       color:        partit?.color || '#888888',
       bg_color:     partit?.bg_color || '#f5f5f5',
@@ -173,12 +174,18 @@ function PartitModal({ partit, onClose }) {
         <form onSubmit={handleSubmit(d => save.mutate(d))} className="p-5 space-y-5">
           {partit?.id && <input type="hidden" {...register('id')} />}
 
-          {/* Nom + Sigles */}
+          {/* Nom + Codi + Sigles */}
           <div className="grid grid-cols-2 gap-4">
-            <div>
+            <div className="col-span-2">
               <label className="text-xs font-semibold text-mid block mb-1">Nom complet *</label>
               <input {...register('nom', { required: true })}
                 className="w-full text-sm border border-border rounded-lg px-3 py-2 focus:outline-none" />
+            </div>
+            <div>
+              <label className="text-xs font-semibold text-mid block mb-1">Codi intern * <span className="font-normal text-mid/60">(ex: pp, psib, mes, vox...)</span></label>
+              <input {...register('codi', { required: true })}
+                placeholder="pp"
+                className="w-full text-sm font-mono border border-border rounded-lg px-3 py-2 focus:outline-none" />
             </div>
             <div>
               <label className="text-xs font-semibold text-mid block mb-1">Sigles</label>
