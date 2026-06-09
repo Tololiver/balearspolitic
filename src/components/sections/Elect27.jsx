@@ -164,8 +164,13 @@ function Calculator() {
             </div>
           ))}
         </div>
-        <div className="relative mb-3">
-          <div className="flex h-7 rounded-lg overflow-hidden border border-border">
+        <div className="relative pt-6 mb-3">
+          <div className="absolute top-0 left-0 right-0 h-0" style={{paddingLeft:`${(majoria/TOTAL)*100}%`}}>
+            <div className="absolute top-0 font-mono text-[9px] text-red-500 whitespace-nowrap font-bold -translate-x-1/2 bg-paper px-1 rounded">
+              majoria ({majoria})
+            </div>
+          </div>
+          <div className="flex h-7 rounded-lg overflow-hidden border border-border relative">
             {PARTITS_CALC.filter(p=>seats[p.nom]>0).map(p=>(
               <div key={p.nom} style={{flex:seats[p.nom],background:p.color,transition:'flex 0.3s'}}
                 title={`${p.nom}: ${seats[p.nom]}`} className="flex items-center justify-center">
@@ -173,9 +178,7 @@ function Calculator() {
               </div>
             ))}
             {total<TOTAL&&<div style={{flex:TOTAL-total,background:'#eee'}} className="flex items-center justify-center"><span className="text-mid font-mono text-[9px]">{TOTAL-total}</span></div>}
-          </div>
-          <div className="absolute top-0 bottom-0 w-0.5 bg-red-500 z-10" style={{left:`${(majoria/TOTAL)*100}%`}}>
-            <div className="absolute -top-5 -translate-x-1/2 font-mono text-[9px] text-red-500 whitespace-nowrap font-bold">majoria ({majoria})</div>
+            <div className="absolute top-0 bottom-0 w-0.5 bg-red-500 z-10" style={{left:`${(majoria/TOTAL)*100}%`}}/>
           </div>
         </div>
         <div className="flex flex-wrap gap-2 mb-4">

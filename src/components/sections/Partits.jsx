@@ -115,12 +115,14 @@ function PartitCard({ partit: p, isOpen, onToggle }) {
             </div>
           )}
 
-          {/* Resultats electorals */}
+          {/* Resultats electorals Balears + per illes */}
           {(p.escons_2023 != null || p.escons_2019 != null || p.escons_2015 != null) && (
             <div className="px-5 py-4 border-b border-black/8">
-              <div className="font-mono text-[9px] tracking-[2px] uppercase font-bold mb-3"
-                style={{color}}>Resultats electorals</div>
-              <div className="flex gap-6">
+              <div className="font-mono text-[9px] tracking-[2px] uppercase font-bold mb-3" style={{color}}>
+                Resultats electorals
+              </div>
+              <div className="flex gap-6 flex-wrap">
+                {/* Balears — destacat */}
                 {[
                   {any:2023, n:p.escons_2023, pct:p.pct_2023},
                   {any:2019, n:p.escons_2019, pct:p.pct_2019},
@@ -128,12 +130,39 @@ function PartitCard({ partit: p, isOpen, onToggle }) {
                 ].filter(r => r.n != null).map(r => (
                   <div key={r.any} className="text-center">
                     <div className="font-display text-2xl font-black" style={{color}}>{r.n}</div>
-                    <div className="font-mono text-[9px] text-mid">escons</div>
+                    <div className="font-mono text-[9px] text-mid">escons IB</div>
                     {r.pct && <div className="font-mono text-[9px] text-mid">{r.pct}</div>}
                     <div className="font-mono text-[9px] font-bold text-mid mt-0.5">{r.any}</div>
                   </div>
                 ))}
               </div>
+
+              {/* Per illes 2023 */}
+              {p.resultats_illes && Object.keys(p.resultats_illes).length > 0 && (
+                <div className="mt-4 pt-3 border-t border-black/6">
+                  <div className="font-mono text-[9px] tracking-[2px] uppercase font-bold text-mid mb-2">
+                    Resultats per illa · 2023
+                  </div>
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                    {[
+                      {key:'mallorca',   label:'Mallorca'},
+                      {key:'menorca',    label:'Menorca'},
+                      {key:'eivissa',    label:'Eivissa'},
+                      {key:'formentera', label:'Formentera'},
+                    ].filter(i => p.resultats_illes[i.key]).map(({key, label}) => {
+                      const r = p.resultats_illes[key]
+                      return (
+                        <div key={key} className="bg-white/60 rounded-lg p-2.5 text-center border border-black/6">
+                          <div className="font-mono text-[9px] uppercase tracking-wide text-mid mb-1">{label}</div>
+                          <div className="font-display text-lg font-black" style={{color}}>{r.escons}</div>
+                          <div className="font-mono text-[9px] text-mid">escons</div>
+                          {r.pct && <div className="font-mono text-[9px] text-mid">{r.pct}</div>}
+                        </div>
+                      )
+                    })}
+                  </div>
+                </div>
+              )}
             </div>
           )}
 
