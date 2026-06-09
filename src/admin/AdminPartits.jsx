@@ -149,12 +149,27 @@ function PartitModal({ partit, onClose }) {
       let posicions = {}
       try { posicions = JSON.parse(data.posicions) }
       catch { toast.error('JSON de posicions invàlid'); throw new Error('JSON invàlid') }
+      const illes = ['mallorca','menorca','eivissa','formentera']
+      const buildIllesJson = (prefix) => {
+        const result = {}
+        illes.forEach(illa => {
+          const escons = data[`illes_${prefix}_${illa}_escons`]
+          const pct    = data[`illes_${prefix}_${illa}_pct`]
+          if (escons !== '' && escons != null) {
+            result[illa] = { escons: parseInt(escons) || 0, pct: pct || '', any: parseInt(prefix) }
+          }
+        })
+        return result
+      }
+
       const payload = {
         ...data,
         posicions,
         escons_2023: data.escons_2023 ? parseInt(data.escons_2023) : null,
         escons_2019: data.escons_2019 ? parseInt(data.escons_2019) : null,
         escons_2015: data.escons_2015 ? parseInt(data.escons_2015) : null,
+        resultats_illes: { ...buildIllesJson('2023') },
+        resultats_illes_2027: { ...buildIllesJson('2027') },
       }
       const { error } = await supabase.from('partits').upsert(payload)
       if (error) throw error
@@ -263,9 +278,9 @@ function PartitModal({ partit, onClose }) {
               className="w-full text-sm border border-border rounded-lg px-3 py-2 resize-none focus:outline-none" />
           </div>
 
-          {/* Resultats electorals */}
+          {/* Resultats electorals Balears */}
           <div className="bg-paper rounded-lg border border-border p-4">
-            <div className="font-mono text-[10px] tracking-[2px] uppercase text-mid font-bold mb-3">Resultats electorals</div>
+            <div className="font-mono text-[10px] tracking-[2px] uppercase text-mid font-bold mb-3">Resultats electorals · Illes Balears</div>
             <div className="grid grid-cols-3 gap-3">
               {[2023, 2019, 2015].map(any => (
                 <div key={any} className="space-y-2">
@@ -278,6 +293,12 @@ function PartitModal({ partit, onClose }) {
               ))}
             </div>
           </div>
+
+          {/* Resultats per illes 2023 */}
+          <IslesEditor label="Resultats per illa · 2023" prefix="2023" partit={partit} watch={watch} setValue={setValue} />
+
+          {/* Previsió per illes 2027 */}
+          <IslesEditor label="Previsió per illa · 2027" prefix="2027" partit={partit} watch={watch} setValue={setValue} orientatiu />
 
           {/* Posicions */}
           <div>
@@ -301,6 +322,63 @@ function PartitModal({ partit, onClose }) {
             </button>
           </div>
         </form>
+      </div>
+    </div>
+  )
+}
+
+// ── IslesEditor component ─────────────────────────────────────
+function IslesEditor({ label, prefix, partit, watch, setValue, orientatiu }) {
+  const ILLES = [
+    {key:'mallorca',   nom:'Mallorca'},
+    {key:'menorca',    nom:'Menorca'},
+    {key:'eivissa',    nom:'Eivissa'},
+    {key:'formentera', nom:'Formentera'},
+  ]
+  const sourceData = prefix === '2027' ? partit?.resultats_illes_2027 : partit?.resultats_illes
+
+  return (
+    <div className="bg-paper rounded-lg border border-border p-4">
+      <div className="flex items-center gap-2 mb-3">
+        <div className="font-mono text-[10px] tracking-[2px] uppercase text-mid font-bold">{label}</div>
+        {orientatiu && (
+          <span className="font-mono text-[9px] bg-amber-100 text-amber-700 px-2 py-0.5 rounded">Orientatiu</span>
+        )}
+      </div>
+      <div className="grid grid-cols-2 gap-3">
+        {ILLES.map(({key, nom}) => {
+          const fieldEscons = `illes_${prefix}_${key}_escons`
+          const fieldPct    = `illes_${prefix}_${key}_pct`
+          const defaultE    = sourceData?.[key]?.escons ?? ''
+          const defaultP    = sourceData?.[key]?.pct    ?? ''
+          return (
+            <div key={key} className="bg-white rounded-lg border border-border p-3">
+              <div className="font-mono text-[10px] font-bold text-mid mb-2">{nom}</div>
+              <div className="grid grid-cols-2 gap-2">
+                <div>
+                  <label className="text-[10px] text-mid block mb-1">Escons</label>
+                  <input
+                    type="number"
+                    defaultValue={defaultE}
+                    onChange={e => setValue(fieldEscons, e.target.value)}
+                    placeholder="0"
+                    className="w-full text-sm text-center border border-border rounded px-2 py-1.5 focus:outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="text-[10px] text-mid block mb-1">% vots</label>
+                  <input
+                    type="text"
+                    defaultValue={defaultP}
+                    onChange={e => setValue(fieldPct, e.target.value)}
+                    placeholder="0.0%"
+                    className="w-full text-sm text-center border border-border rounded px-2 py-1.5 focus:outline-none font-mono"
+                  />
+                </div>
+              </div>
+            </div>
+          )
+        })}
       </div>
     </div>
   )
