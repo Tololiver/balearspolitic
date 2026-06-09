@@ -208,7 +208,24 @@ function Calculator() {
   )
 }
 
-// ── Sondejos ──────────────────────────────────────────────────
+// ── D'Hondt ────────────────────────────────────────────────────
+function dhondt(resultats, totalEscons = 59) {
+  if (!resultats?.length) return {}
+  const quotes = []
+  resultats.forEach(r => {
+    for (let d = 1; d <= totalEscons; d++) {
+      quotes.push({ parti: r.parti, val: r.pct / d, color: r.color })
+    }
+  })
+  quotes.sort((a, b) => b.val - a.val)
+  const escons = {}
+  quotes.slice(0, totalEscons).forEach(q => {
+    escons[q.parti] = (escons[q.parti] || 0) + 1
+  })
+  return escons
+}
+
+// ── Sondejos ───────────────────────────────────────────────────
 function SondejosWidget() {
   const { data: sondejos, isLoading } = useSondejos({ ambit:'govern' })
   if (isLoading||!sondejos?.length) return (
@@ -220,36 +237,54 @@ function SondejosWidget() {
         <div className="font-mono text-[10px] tracking-[2px] uppercase text-mid mb-1">Enquestes publicades</div>
         <div className="font-display text-lg font-black text-ink">Sondejos — Govern IB</div>
       </div>
-      <div className="p-5 space-y-4">
+      <div className="p-5 space-y-5">
         {sondejos.slice(0,5).map(s=>{
-          const res=s.resultats||[]
-          const date=new Date(s.data_publicacio).toLocaleDateString('ca-ES',{day:'numeric',month:'short',year:'numeric'})
+          const res  = s.resultats || []
+          const date = new Date(s.data_publicacio).toLocaleDateString('ca-ES',{day:'numeric',month:'short',year:'numeric'})
+          const calc = dhondt(res, 59)
           return (
-            <div key={s.id} className="pb-4 border-b border-border last:border-0 last:pb-0">
+            <div key={s.id} className="pb-5 border-b border-border last:border-0 last:pb-0">
               <div className="flex items-center justify-between mb-2">
-                <span className="font-semibold text-xs text-ink">{s.font}</span>
+                <span className="font-semibold text-sm text-ink">{s.font}</span>
                 <span className="font-mono text-[10px] text-mid">{date}</span>
               </div>
-              <div className="flex h-5 rounded overflow-hidden mb-1.5">
+
+              {/* Barra */}
+              <div className="flex h-5 rounded overflow-hidden mb-3">
                 {res.filter(r=>r.pct>0).map((r,i)=>(
-                  <div key={i} style={{flex:r.pct,background:r.color}} title={`${r.parti}: ${r.pct}%`}
+                  <div key={i} style={{flex:r.pct,background:r.color}}
+                    title={`${r.parti}: ${r.pct}%`}
                     className="flex items-center justify-center">
                     {r.pct>=8&&<span className="text-white font-mono text-[8px] font-bold">{r.parti}</span>}
                   </div>
                 ))}
               </div>
-              <div className="flex flex-wrap gap-3">
-                {res.map((r,i)=>(
-                  <div key={i} className="flex items-center gap-1.5">
-                    <span className="w-2.5 h-2.5 rounded-sm flex-shrink-0" style={{background:r.color}}/>
-                    <span className="font-mono text-[10px] font-bold text-mid">{r.parti}</span>
-                    <span className="font-mono text-[10px] text-mid">{r.pct}%</span>
-                    {r.escons && (
-                      <span className="font-mono text-[10px] font-black text-ink">({r.escons})</span>
-                    )}
-                  </div>
-                ))}
+
+              {/* Resultats amb escons calculats */}
+              <div className="flex flex-wrap gap-2">
+                {res.map((r,i)=>{
+                  // Usa escons del CMS si els té, sinó calcula amb D'Hondt
+                  const escons = r.escons ?? calc[r.parti] ?? 0
+                  return (
+                    <div key={i} className="flex items-center gap-1.5 bg-paper rounded-lg px-2.5 py-1.5 border border-border">
+                      <span className="w-2.5 h-2.5 rounded-sm flex-shrink-0" style={{background:r.color}}/>
+                      <span className="font-mono text-[10px] font-bold text-ink">{r.parti}</span>
+                      <span className="font-mono text-[10px] text-mid">{r.pct}%</span>
+                      <span className="font-mono text-[10px] font-black"
+                        style={{color:r.color}}>
+                        · {escons} esc.
+                      </span>
+                    </div>
+                  )
+                })}
               </div>
+
+              {/* Nota D'Hondt */}
+              {!res.some(r=>r.escons) && (
+                <div className="font-mono text-[9px] text-mid/50 mt-2">
+                  * Escons calculats amb D'Hondt (59 total). Estimació aproximada.
+                </div>
+              )}
             </div>
           )
         })}
