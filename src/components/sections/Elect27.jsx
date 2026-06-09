@@ -238,11 +238,16 @@ function SondejosWidget() {
                   </div>
                 ))}
               </div>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-3">
                 {res.map((r,i)=>(
-                  <span key={i} className="flex items-center gap-1 font-mono text-[9px] text-mid">
-                    <span className="w-2 h-2 rounded-sm" style={{background:r.color}}/>{r.parti} {r.pct}%
-                  </span>
+                  <div key={i} className="flex items-center gap-1.5">
+                    <span className="w-2.5 h-2.5 rounded-sm flex-shrink-0" style={{background:r.color}}/>
+                    <span className="font-mono text-[10px] font-bold text-mid">{r.parti}</span>
+                    <span className="font-mono text-[10px] text-mid">{r.pct}%</span>
+                    {r.escons && (
+                      <span className="font-mono text-[10px] font-black text-ink">({r.escons})</span>
+                    )}
+                  </div>
                 ))}
               </div>
             </div>

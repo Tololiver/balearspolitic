@@ -137,32 +137,42 @@ function PartitCard({ partit: p, isOpen, onToggle }) {
                 ))}
               </div>
 
-              {/* Per illes 2023 */}
-              {p.resultats_illes && Object.keys(p.resultats_illes).length > 0 && (
-                <div className="mt-4 pt-3 border-t border-black/6">
-                  <div className="font-mono text-[9px] tracking-[2px] uppercase font-bold text-mid mb-2">
-                    Resultats per illa · 2023
-                  </div>
+              {/* Per illes 2023 — sempre visible */}
+              <div className="mt-4 pt-3 border-t border-black/6">
+                <div className="font-mono text-[9px] tracking-[2px] uppercase font-bold text-mid mb-2">
+                  Resultats per illa · 2023
+                </div>
+                {p.resultats_illes && Object.keys(p.resultats_illes).length > 0 ? (
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                     {[
                       {key:'mallorca',   label:'Mallorca'},
                       {key:'menorca',    label:'Menorca'},
                       {key:'eivissa',    label:'Eivissa'},
                       {key:'formentera', label:'Formentera'},
-                    ].filter(i => p.resultats_illes[i.key]).map(({key, label}) => {
+                    ].map(({key, label}) => {
                       const r = p.resultats_illes[key]
                       return (
                         <div key={key} className="bg-white/60 rounded-lg p-2.5 text-center border border-black/6">
                           <div className="font-mono text-[9px] uppercase tracking-wide text-mid mb-1">{label}</div>
-                          <div className="font-display text-lg font-black" style={{color}}>{r.escons}</div>
-                          <div className="font-mono text-[9px] text-mid">escons</div>
-                          {r.pct && <div className="font-mono text-[9px] text-mid">{r.pct}</div>}
+                          {r ? (
+                            <>
+                              <div className="font-display text-lg font-black" style={{color}}>{r.escons}</div>
+                              <div className="font-mono text-[9px] text-mid">escons</div>
+                              {r.pct && <div className="font-mono text-[9px] text-mid">{r.pct}</div>}
+                            </>
+                          ) : (
+                            <div className="font-mono text-[10px] text-mid/40 py-1">—</div>
+                          )}
                         </div>
                       )
                     })}
                   </div>
-                </div>
-              )}
+                ) : (
+                  <div className="text-[11px] text-mid/50 italic">
+                    Dades per illa pendents d'actualització al CMS.
+                  </div>
+                )}
+              </div>
             </div>
           )}
 
