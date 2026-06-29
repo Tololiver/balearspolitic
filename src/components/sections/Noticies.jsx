@@ -129,46 +129,86 @@ function NoticiaCard({ item }) {
   const [expanded, setExpanded] = useState(false)
   const color = CAT_COLORS[item.categoria] || '#888'
   const resum = item.resum_manual || item.resum_ia
+  const data = item.data_publicacio
+    ? new Date(item.data_publicacio + 'T12:00:00').toLocaleDateString('ca-ES', {day:'numeric', month:'long', year:'numeric'})
+    : ''
 
   return (
-    <div className="bg-white rounded-card border border-border overflow-hidden hover:shadow-card transition-shadow"
+    <div className="bg-white rounded-card border border-border overflow-hidden transition-all duration-200"
       style={{ borderLeftWidth: 3, borderLeftColor: color }}>
-      <div className="p-4">
-        <div className="flex items-start gap-3">
-          <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-2 flex-wrap mb-1.5">
-              <span className="font-mono text-[9px] font-bold text-white px-1.5 py-0.5 rounded capitalize"
-                style={{ background: color }}>
-                {item.categoria}
+
+      {/* Capçalera — sempre visible */}
+      <button onClick={() => setExpanded(!expanded)}
+        className="w-full flex items-start justify-between gap-3 p-4 text-left hover:bg-paper/50 transition-colors">
+        <div className="flex-1 min-w-0">
+          <div className="flex items-center gap-2 flex-wrap mb-1.5">
+            <span className="font-mono text-[9px] font-bold text-white px-1.5 py-0.5 rounded capitalize"
+              style={{ background: color }}>
+              {item.categoria}
+            </span>
+            <span className="font-mono text-[10px] text-mid font-semibold">{item.font}</span>
+            {data && <span className="font-mono text-[10px] text-mid">{data}</span>}
+            {item.auto && (
+              <span className="flex items-center gap-0.5 font-mono text-[9px] text-mid/50">
+                <Bot size={9}/> Auto
               </span>
-              <span className="font-mono text-[10px] text-mid font-semibold">{item.font}</span>
-              {item.auto && (
-                <span className="flex items-center gap-0.5 font-mono text-[9px] text-mid/50">
-                  <Bot size={9}/> Auto
-                </span>
-              )}
-            </div>
-
-            <button onClick={() => setExpanded(!expanded)} className="text-left w-full">
-              <div className="font-semibold text-sm text-ink leading-snug hover:text-accent transition-colors">
-                {item.titol}
-              </div>
-            </button>
-
-            {resum && expanded && (
-              <p className="text-xs text-mid leading-relaxed mt-2">{resum}</p>
             )}
           </div>
+          <div className="font-semibold text-sm text-ink leading-snug">
+            {item.titol}
+          </div>
+        </div>
+        <svg className={`w-4 h-4 text-mid flex-shrink-0 mt-0.5 transition-transform duration-200 ${expanded ? 'rotate-180' : ''}`}
+          viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+          <polyline points="6 9 12 15 18 9"/>
+        </svg>
+      </button>
 
+      {/* Detall expandit */}
+      {expanded && (
+        <div className="border-t border-border px-4 py-4" style={{background:`${color}08`}}>
+
+          {/* Resum */}
+          {resum && (
+            <div className="mb-4">
+              <div className="font-mono text-[9px] tracking-[2px] uppercase font-bold mb-1.5" style={{color}}>
+                Resum
+              </div>
+              <p className="text-sm text-mid leading-relaxed">{resum}</p>
+            </div>
+          )}
+
+          {/* Metadades */}
+          <div className="flex flex-wrap gap-x-6 gap-y-1.5 mb-4">
+            {data && (
+              <div>
+                <div className="font-mono text-[9px] uppercase text-mid/60 mb-0.5">Data</div>
+                <div className="font-mono text-xs text-ink font-semibold">{data}</div>
+              </div>
+            )}
+            {item.font && (
+              <div>
+                <div className="font-mono text-[9px] uppercase text-mid/60 mb-0.5">Font</div>
+                <div className="font-mono text-xs text-ink font-semibold">{item.font}</div>
+              </div>
+            )}
+            <div>
+              <div className="font-mono text-[9px] uppercase text-mid/60 mb-0.5">Categoria</div>
+              <div className="font-mono text-xs font-semibold capitalize" style={{color}}>{item.categoria}</div>
+            </div>
+          </div>
+
+          {/* Botó font original */}
           {item.url_original && (
             <a href={item.url_original} target="_blank" rel="noreferrer"
-              className="flex-shrink-0 text-mid hover:text-accent transition-colors mt-0.5"
-              title="Llegir notícia original">
-              <ExternalLink size={14} strokeWidth={1.5}/>
+              className="inline-flex items-center gap-2 text-xs font-semibold text-white px-3 py-2 rounded-lg transition-opacity hover:opacity-90"
+              style={{background: color}}>
+              <ExternalLink size={12} strokeWidth={1.5}/>
+              Llegir notícia original
             </a>
           )}
         </div>
-      </div>
+      )}
     </div>
   )
 }
