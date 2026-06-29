@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom'
-import { Home, Scale, Users, ArrowLeftRight, FileText, Building2, Calendar, Layers, PenLine, BookOpen } from 'lucide-react'
+import { Home, Scale, Users, ArrowLeftRight, FileText, Building2, Calendar, Layers, PenLine, BookOpen, Newspaper } from 'lucide-react'
 
 const MINT = '#43F8CC'
 const ICO = { size: 14, strokeWidth: 1.5 }
