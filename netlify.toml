@@ -1,8 +1,15 @@
 [build]
-  command = "npm run build"
   publish = "dist"
+  command = "npm run build"
 
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
+
+[functions]
+  directory = "netlify/functions"
+
+# Crawler diari de clipping — 07:00 UTC cada dia
+[functions.clipping-crawler]
+  schedule = "0 7 * * *"
