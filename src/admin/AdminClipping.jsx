@@ -216,6 +216,36 @@ function ClippingModal({ item, onClose }) {
     categoria:       item?.categoria || 'general',
     estat:           item?.estat || 'esborrany',
   })
+  const [generant, setGenerant] = useState(false)
+
+  const generaResum = async () => {
+    if (!form.titol) { toast.error('Posa un titular primer'); return }
+    setGenerant(true)
+    try {
+      const response = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'claude-haiku-4-5-20251001',
+          max_tokens: 300,
+          messages: [{
+            role: 'user',
+            content: `Ets un analista polític de les Illes Balears. Genera un resum breu (2-3 frases) d'aquesta notícia en la mateixa llengua que el titular. Respon ÚNICAMENT amb el text del resum, sense cap altre comentari.\n\nTITULAR: ${form.titol}\nFONT: ${form.font || ''}\nURL: ${form.url_original || ''}`
+          }]
+        })
+      })
+      const data = await response.json()
+      const resum = data.content?.[0]?.text?.trim()
+      if (resum) {
+        setForm(p => ({ ...p, resum_manual: resum }))
+        toast.success('Resum generat!')
+      }
+    } catch (e) {
+      toast.error('Error generant resum: ' + e.message)
+    } finally {
+      setGenerant(false)
+    }
+  }
 
   const save = useMutation({
     mutationFn: async () => {
@@ -245,7 +275,14 @@ function ClippingModal({ item, onClose }) {
               className="w-full text-sm border border-border rounded-lg px-3 py-2 focus:outline-none"/>
           </div>
           <div>
-            <label className="text-xs font-semibold text-mid block mb-1">Resum</label>
+            <div className="flex items-center justify-between mb-1">
+              <label className="text-xs font-semibold text-mid">Resum</label>
+              <button onClick={generaResum} disabled={generant}
+                className="flex items-center gap-1.5 text-xs font-semibold text-accent hover:underline disabled:opacity-50">
+                <Bot size={11} strokeWidth={1.5}/>
+                {generant ? 'Generant...' : 'Generar amb IA'}
+              </button>
+            </div>
             <textarea value={form.resum_manual} onChange={e => setForm(p=>({...p,resum_manual:e.target.value}))}
               rows={4} className="w-full text-sm border border-border rounded-lg px-3 py-2 resize-none focus:outline-none"/>
           </div>
