@@ -13,7 +13,9 @@ import AdminProgrames    from './AdminProgrames'
 import AdminBlog         from './AdminBlog'
 import AdminHome         from './AdminHome'
 import AdminCandidatures from './AdminCandidatures'
-import AdminSondejos     from './AdminSondejos'
+import AdminSondejos        from './AdminSondejos'
+import AdminClipping        from './AdminClipping'
+import AdminClippingConfig  from './AdminClippingConfig'
 import { LoadingSpinner } from '@/components/ui'
 
 const ADMIN_EMAIL = import.meta.env.VITE_ADMIN_EMAIL
@@ -27,7 +29,9 @@ const NAV = [
   { to:'/admin/governs',      label:'Governs',        icon:Calendar },
   { to:'/admin/programes',    label:'Programes',      icon:FileText },
   { to:'/admin/candidatures', label:'Candidatures 27',icon:Vote },
-  { to:'/admin/sondejos',     label:'Sondejos 2027',  icon:BarChart2 },
+  { to:'/admin/sondejos',      label:'Sondejos 2027',   icon:BarChart2 },
+  { to:'/admin/clipping',      label:'Clipping',        icon:Rss },
+  { to:'/admin/clipping-config',label:'Config Clipping', icon:Settings2 },
 ]
 
 export default function AdminLayout() {
@@ -83,7 +87,9 @@ export default function AdminLayout() {
           <Route path="governs"     element={<AdminGoverns />} />
           <Route path="programes"   element={<AdminProgrames />} />
           <Route path="candidatures" element={<AdminCandidatures />} />
-          <Route path="sondejos"    element={<AdminSondejos />} />
+          <Route path="sondejos"       element={<AdminSondejos />} />
+        <Route path="clipping"       element={<AdminClipping />} />
+        <Route path="clipping-config" element={<AdminClippingConfig />} />
         </Routes>
       </main>
     </div>
