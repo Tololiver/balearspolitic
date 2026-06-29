@@ -17,6 +17,7 @@ const Pobles      = lazy(() => import('@/components/sections/Pobles'))
 const Elect27     = lazy(() => import('@/components/sections/Elect27'))
 const Governs     = lazy(() => import('@/components/sections/Governs'))
 const Fonts       = lazy(() => import('@/components/sections/Fonts'))
+const Noticies    = lazy(() => import('@/components/sections/Noticies'))
 const Blog        = lazy(() => import('@/components/sections/Blog'))
 const BlogPost    = lazy(() => import('@/components/sections/BlogPost'))
 const AdminLayout = lazy(() => import('@/admin/AdminLayout'))
@@ -50,6 +51,7 @@ function PublicLayout() {
             <Route path="eleccions-2027"  element={<Elect27 />} />
             <Route path="governs"         element={<Governs />} />
             <Route path="fonts"           element={<Fonts />} />
+            <Route path="noticies"        element={<Noticies />} />
             <Route path="blog"            element={<Blog />} />
             <Route path="blog/:slug"      element={<BlogPost />} />
             <Route path="avis-legal"      element={<Legal />} />
