@@ -35,7 +35,7 @@ function filtraParaulesClau(titol, desc, paraules) {
   return paraules.some(p => text.includes(p.toLowerCase()))
 }
 
-// ── Analitza amb IA ──────────────────────────────────────────
+// ── Analitza amb IA (opcional) ────────────────────────────────
 async function analitzaAmbIA(titol, desc, promptIA) {
   try {
     const response = await fetch('https://api.anthropic.com/v1/messages', {
@@ -50,16 +50,34 @@ async function analitzaAmbIA(titol, desc, promptIA) {
         max_tokens: 300,
         messages: [{
           role: 'user',
-          content: `${promptIA}\n\nTITULAR: ${titol}\nDESCRIPCIÓ: ${desc?.slice(0, 300) || ''}`
+          content: `${promptIA}\n\nTITULAR: ${titol}\nDESCRIPCIÓ: ${(desc || '').slice(0, 300)}`
         }]
-      })
+      }),
+      signal: AbortSignal.timeout(10000)
     })
-    const data = await response.json()
-    const text = data.content?.[0]?.text || '{}'
-    const clean = text.replace(/```json|```/g, '').trim()
-    return JSON.parse(clean)
-  } catch {
-    return { rellevant: false }
+    
+    if (!response.ok) {
+      console.error('Anthropic error:', response.status)
+      return { rellevant: true, categoria: 'general', resum: '' }
+    }
+    
+    const text = await response.text()
+    if (!text) return { rellevant: true, categoria: 'general', resum: '' }
+    
+    const data = JSON.parse(text)
+    const content = data.content?.[0]?.text || '{}'
+    const clean = content.replace(/```json|```/g, '').trim()
+    
+    try {
+      return JSON.parse(clean)
+    } catch {
+      // Si no és JSON vàlid, retorna rellevant=true amb el text com a resum
+      return { rellevant: true, categoria: 'general', resum: content.slice(0, 300) }
+    }
+  } catch (e) {
+    console.error('IA error:', e.message)
+    // Si falla la IA, la notícia continua guardant-se si passa el filtre de paraules clau
+    return { rellevant: false, categoria: 'general', resum: '' }
   }
 }
 
@@ -110,10 +128,15 @@ exports.handler = async () => {
 
           // Filtre 1: paraules clau
           const passaParaules = filtraParaulesClau(item.titol, item.desc, paraules)
+          
+          let analisi = { rellevant: false, categoria: 'general', resum: '' }
+          
+          // Filtre 2: IA (només si té clau Anthropic)
+          if (process.env.ANTHROPIC_API_KEY) {
+            analisi = await analitzaAmbIA(item.titol, item.desc, promptIA)
+          }
 
-          // Filtre 2: IA (sempre, però amb menys cost si ja passa paraules clau)
-          const analisi = await analitzaAmbIA(item.titol, item.desc, promptIA)
-
+          // Guarda si passa paraules clau O si la IA diu que és rellevant
           if (!passaParaules && !analisi.rellevant) continue
 
           // Inserir a BD
