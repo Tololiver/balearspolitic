@@ -14,6 +14,7 @@ const TABS = [
   { to:'/eleccions-2027',label:'Eleccions 2027',  icon:<Calendar {...ICO}/>    },
   { to:'/governs',       label:'Governs',         icon:<Layers {...ICO}/>      },
   { to:'/blog',          label:'Blog',            icon:<PenLine {...ICO}/>     },
+  { to:'/noticies',      label:'Notícies',        icon:<Newspaper {...ICO}/>  },
   { to:'/fonts',         label:'Fonts',           icon:<BookOpen {...ICO}/>    },
 ]
 
