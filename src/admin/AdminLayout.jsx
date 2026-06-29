@@ -4,7 +4,7 @@ import { Routes, Route, NavLink } from 'react-router-dom'
 import { supabase } from '@/lib/supabase'
 import {
   LayoutDashboard, Home, PenLine, Users, MapPin,
-  Calendar, FileText, Vote, BarChart2, LogOut
+  Calendar, FileText, Vote, BarChart2, LogOut, Radio, Settings
 } from 'lucide-react'
 import AdminPartits      from './AdminPartits'
 import AdminPobles       from './AdminPobles'
@@ -30,8 +30,8 @@ const NAV = [
   { to:'/admin/programes',    label:'Programes',      icon:FileText },
   { to:'/admin/candidatures', label:'Candidatures 27',icon:Vote },
   { to:'/admin/sondejos',      label:'Sondejos 2027',   icon:BarChart2 },
-  { to:'/admin/clipping',      label:'Clipping',        icon:Rss },
-  { to:'/admin/clipping-config',label:'Config Clipping', icon:Settings2 },
+  { to:'/admin/clipping',       label:'Clipping',        icon:Radio },
+  { to:'/admin/clipping-config',label:'Config Clipping', icon:Settings },
 ]
 
 export default function AdminLayout() {
