@@ -1,0 +1,60 @@
+/* src/styles/rich-editor.css */
+
+/* Placeholder */
+.rich-editor:empty:before {
+  content: attr(data-placeholder);
+  color: #aaa;
+  pointer-events: none;
+}
+
+/* Contingut de l'editor */
+.rich-editor h2 {
+  font-family: 'Fraunces', serif;
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: #1a1a1a;
+  margin: 1.2rem 0 0.4rem;
+  line-height: 1.2;
+}
+
+.rich-editor h3 {
+  font-family: 'Fraunces', serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 1rem 0 0.3rem;
+}
+
+.rich-editor p {
+  margin: 0.6rem 0;
+  line-height: 1.7;
+}
+
+.rich-editor strong { font-weight: 700; }
+.rich-editor em     { font-style: italic; }
+
+.rich-editor ul, .rich-editor ol {
+  padding-left: 1.4rem;
+  margin: 0.6rem 0;
+}
+.rich-editor li { margin: 0.2rem 0; line-height: 1.6; }
+
+.rich-editor blockquote {
+  border-left: 3px solid #43F8CC;
+  margin: 0.8rem 0;
+  padding: 0.5rem 1rem;
+  background: #f5fffe;
+  color: #555;
+  font-style: italic;
+}
+
+.rich-editor a {
+  color: #43F8CC;
+  text-decoration: underline;
+}
+
+.rich-editor hr {
+  border: none;
+  border-top: 1px solid #e5e0d8;
+  margin: 1rem 0;
+}
