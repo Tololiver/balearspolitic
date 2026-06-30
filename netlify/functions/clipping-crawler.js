@@ -9,6 +9,26 @@ const supabase = createClient(
   process.env.SUPABASE_SERVICE_KEY || process.env.VITE_SUPABASE_ANON_KEY
 )
 
+// ── Decodifica HTML entities ──────────────────────────────────
+function decodeHTML(str) {
+  if (!str) return ''
+  return str
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#8216;/g, '\u2018')  // '
+    .replace(/&#8217;/g, '\u2019')  // '
+    .replace(/&#8220;/g, '\u201C')  // "
+    .replace(/&#8221;/g, '\u201D')  // "
+    .replace(/&#8211;/g, '\u2013')  // –
+    .replace(/&#8212;/g, '\u2014')  // —
+    .replace(/&#8230;/g, '\u2026')  // …
+    .replace(/&#(\d+);/g, (_, code) => String.fromCharCode(parseInt(code)))
+    .replace(/&[a-zA-Z]+;/g, '')
+    .trim()
+}
+
 // ── Parse RSS simple sense dependències externes ──────────────
 function parseRSS(xml) {
   const items = []
@@ -24,7 +44,7 @@ function parseRSS(xml) {
     const url   = get('link') || get('guid')
     const desc  = get('description')
     const data  = get('pubDate')
-    if (titol && url) items.push({ titol, url, desc, data })
+    if (titol && url) items.push({ titol: decodeHTML(titol), url, desc: decodeHTML(desc), data })
   }
   return items
 }
