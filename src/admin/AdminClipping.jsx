@@ -222,23 +222,21 @@ function ClippingModal({ item, onClose }) {
     if (!form.titol) { toast.error('Posa un titular primer'); return }
     setGenerant(true)
     try {
-      const response = await fetch('https://api.anthropic.com/v1/messages', {
+      const response = await fetch('/.netlify/functions/blog-ai', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          model: 'claude-haiku-4-5-20251001',
-          max_tokens: 300,
-          messages: [{
-            role: 'user',
-            content: `Ets un analista polític de les Illes Balears. Genera un resum breu (2-3 frases) d'aquesta notícia en la mateixa llengua que el titular. Respon ÚNICAMENT amb el text del resum, sense cap altre comentari.\n\nTITULAR: ${form.titol}\nFONT: ${form.font || ''}\nURL: ${form.url_original || ''}`
-          }]
+          action: 'summarize',
+          content: `Titular: ${form.titol}\nFont: ${form.font || ''}`,
         })
       })
       const data = await response.json()
-      const resum = data.content?.[0]?.text?.trim()
+      const resum = data.result?.trim()
       if (resum) {
         setForm(p => ({ ...p, resum_manual: resum }))
         toast.success('Resum generat!')
+      } else {
+        toast.error('No s\'ha pogut generar el resum')
       }
     } catch (e) {
       toast.error('Error generant resum: ' + e.message)
