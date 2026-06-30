@@ -2,7 +2,8 @@
 import { useState, useEffect } from 'react'
 import { useAllPostsAdmin, useUpsertPost, useDeletePost, useCategories } from '@/hooks/useBlog'
 import { useForm } from 'react-hook-form'
-import { toast } from 'sonner'
+import RichEditor from '@/components/ui/RichEditor'
+import '@/styles/rich-editor.css'
 import { supabase } from '@/lib/supabase'
 
 export default function AdminBlog() {
@@ -233,16 +234,17 @@ function PostEditor({ postId, post, categories, onClose }) {
           {/* Contingut */}
           <div>
             <div className="flex items-center justify-between mb-1">
-              <label className="text-xs font-semibold text-mid">Contingut (HTML)</label>
+              <label className="text-xs font-semibold text-mid">Contingut</label>
               <button type="button" onClick={() => handleAI('millorar')} disabled={aiLoading}
                 className="text-[10px] font-mono font-bold text-accent hover:underline disabled:opacity-50">
                 {aiLoading ? '...' : '✨ Millorar amb IA'}
               </button>
             </div>
-            <textarea {...register('contingut')} rows={12}
-              placeholder="<h2>Títol</h2><p>Contingut en HTML...</p>"
-              className="w-full text-xs font-mono border border-border rounded-lg px-3 py-2 focus:outline-none resize-y" />
-            <div className="text-[10px] text-mid mt-1">Suporta: &lt;h2&gt;, &lt;p&gt;, &lt;strong&gt;, &lt;ul&gt;, &lt;blockquote&gt;...</div>
+            <RichEditor
+              value={watch('contingut') || ''}
+              onChange={val => setValue('contingut', val)}
+              placeholder="Escriu el contingut de l'article..."
+            />
           </div>
 
           {/* Imatge */}
