@@ -148,12 +148,22 @@ exports.handler = async () => {
 
           // Filtre 1: paraules clau
           const passaParaules = filtraParaulesClau(item.titol, item.desc, paraules)
-          
-          let analisi = { rellevant: false, categoria: 'general', resum: '' }
-          
-          // Filtre 2: IA (només si té clau Anthropic)
-          if (process.env.ANTHROPIC_API_KEY) {
+
+          let analisi = { rellevant: passaParaules, categoria: 'general', resum: '' }
+
+          // Filtre 2: IA — només si NO passa paraules clau (estalviem temps)
+          if (!passaParaules && process.env.ANTHROPIC_API_KEY) {
             analisi = await analitzaAmbIA(item.titol, item.desc, promptIA)
+          } else if (passaParaules && process.env.ANTHROPIC_API_KEY) {
+            // Genera resum en segon pla sense blocar
+            analitzaAmbIA(item.titol, item.desc, promptIA).then(a => {
+              if (a.resum) {
+                supabase.from('clipping')
+                  .update({ resum_ia: a.resum, categoria: a.categoria || 'general' })
+                  .eq('url_original', item.url)
+                  .then(() => {})
+              }
+            }).catch(() => {})
           }
 
           // Guarda si passa paraules clau O si la IA diu que és rellevant
