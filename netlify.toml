@@ -9,7 +9,12 @@
 
 [functions]
   directory = "netlify/functions"
+  node_bundler = "esbuild"
 
-# Crawler diari de clipping — 07:00 UTC cada dia
+# Crawler diari — 07:00 UTC cada dia
 [functions.clipping-crawler]
   schedule = "0 7 * * *"
+
+# Timeout ampliat per al crawler (màxim Netlify: 26 segons plans gratuïts)
+[functions."clipping-crawler"]
+  timeout = 26
