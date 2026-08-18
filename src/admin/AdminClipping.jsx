@@ -55,12 +55,25 @@ export default function AdminClipping() {
   const executaCrawler = async () => {
     setRunning(true)
     try {
-      const res = await fetch('/.netlify/functions/clipping-crawler')
-      const data = await res.json()
-      toast.success(`Crawler executat: ${data.inserits} notícies noves de ${data.fonts} fonts`)
+      const res = await fetch('/.netlify/functions/clipping-crawler', {
+        signal: AbortSignal.timeout(30000) // 30 segons
+      })
+      const text = await res.text()
+      if (!text) {
+        toast.success('Crawler executat — recarrega per veure les notícies noves')
+        qc.invalidateQueries({ queryKey: ['admin-clipping'] })
+        return
+      }
+      const data = JSON.parse(text)
+      toast.success(`Crawler executat: ${data.inserits ?? '?'} notícies noves de ${data.fonts ?? '?'} fonts`)
       qc.invalidateQueries({ queryKey: ['admin-clipping'] })
     } catch (e) {
-      toast.error('Error al crawler: ' + e.message)
+      if (e.name === 'TimeoutError' || e.name === 'AbortError') {
+        toast.success('Crawler en execució — pot trigar uns minuts. Recarrega per veure les notícies.')
+        qc.invalidateQueries({ queryKey: ['admin-clipping'] })
+      } else {
+        toast.error('Error al crawler: ' + e.message)
+      }
     } finally {
       setRunning(false)
     }
